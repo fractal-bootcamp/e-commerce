@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import Navbar from "@/components/Navbar";
+import XNavbar from "@/components/XNavbar";
 import "./globals.css";
 import XAuthProvider from "@/components/XAuthProvider";
 
@@ -24,7 +24,7 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning className={`${geistSans.variable} antialiased`}>
         <XAuthProvider>
-          <Navbar />
+          <XNavbar />
           {children}
         </XAuthProvider>
       </body>

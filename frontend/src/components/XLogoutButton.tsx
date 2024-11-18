@@ -5,7 +5,11 @@ import React from "react";
 
 const XLogoutButton = () => {
   const { logout } = useAuth();
-  return <button onClick={logout}>Log Out</button>;
+  return (
+    <button onClick={logout} className="text-black">
+      Log Out
+    </button>
+  );
 };
 
 export default XLogoutButton;
