@@ -4,7 +4,7 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL")
+  url      = env("DATABASE_URL_DEV")
 }
 
 // snack safari
@@ -71,6 +71,7 @@ enum Country {
   AUSTRALIA // Tim Tams, Shapes, Vegemite snacks
   PERU // Chifles, Inca Corn, dried fruit snacks
   SPAIN // Churros, jamón chips, olive snacks
+  SRI_LANKA // Unique snacks, traditional sweets, tea
 }
 
 enum OrderStatus {
