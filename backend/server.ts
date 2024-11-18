@@ -1,6 +1,7 @@
 import express from "express";
+import { port } from "./globals";
+
 const app = express();
-const port = process.env.PORT;
 const cors = require("cors");
 
 app.use(cors());
