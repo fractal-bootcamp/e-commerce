@@ -1,7 +1,7 @@
 import express from "express";
 import { PORT } from "./globals";
 import { config } from "./auth/config";
-import { auth } from "express-openid-connect";
+import { auth, requiresAuth } from "express-openid-connect";
 
 const app = express();
 const cors = require("cors");
@@ -16,6 +16,10 @@ app.get("/", (req, res) => {
 
 app.get("/authcheck", (req, res) => {
   res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+});
+
+app.get("/profile", requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user, null, 2));
 });
 
 app.listen(PORT, () => {
