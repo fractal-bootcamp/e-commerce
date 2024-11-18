@@ -1,10 +1,10 @@
-import { baseUrl, clientId, clientSecret, issuerBaseUrl } from "../globals";
+import { BASE_URL, CLIENT_ID, CLIENT_SECRET, ISSUER_BASE_URL } from "../globals";
 
 export const config = {
   authRequired: false,
   auth0Logout: true,
-  baseURL: baseUrl,
-  clientID: clientId,
-  issuerBaseURL: issuerBaseUrl,
-  secret: clientSecret,
+  baseURL: BASE_URL,
+  clientID: CLIENT_ID,
+  issuerBaseURL: ISSUER_BASE_URL,
+  secret: CLIENT_SECRET,
 };
