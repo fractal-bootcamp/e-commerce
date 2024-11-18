@@ -3,7 +3,7 @@ import { PORT } from "./globals";
 import { config } from "./auth/config";
 import { auth, requiresAuth } from "express-openid-connect";
 
-const app = express();
+export const app = express();
 const cors = require("cors");
 
 app.use(cors());
