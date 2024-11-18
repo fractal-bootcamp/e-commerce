@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL_DEV")
+}
+
+// snack safari
+
+model User {
+  id               String   @id @default(cuid())
+  auth0Id          String   @unique
+  email            String   @unique
+  name             String?
+  address          String?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  orders           Order[]
+  stripeCustomerId String?  @unique
+}
+
+model Product {
+  id              String   @id @default(cuid())
+  name            String
+  description     String?
+  imageUrl        String?
+  country         Country?
+  category        String?
+  inventory_count Int
+  price           Int
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  orders          Order[]
+  stripePriceId   String?  @unique
+  stripeProductId String?  @unique
+
+  @@index([category])
+  @@index([country])
+  @@index([country, category]) // Compound index for filtering by both
+}
+
+model Order {
+  id                    String      @id @default(cuid())
+  userId                String
+  user                  User        @relation(fields: [userId], references: [auth0Id])
+  products              Product[]
+  createdAt             DateTime    @default(now())
+  updatedAt             DateTime    @updatedAt
+  total                 Int
+  paymentId             String?
+  paymentStatus         String?
+  orderStatus           OrderStatus
+  stripeSessionId       String?     @unique
+  stripePaymentIntentId String?     @unique
+
+  @@index([userId])
+}
+
+enum Country {
+  JAPAN // Pocky, Kit Kats, unique chips flavors
+  SOUTH_KOREA // Honey Butter Chips, Pepero, seaweed snacks
+  THAILAND // Tom Yum chips, Taro snacks, dried fruits
+  TAIWAN // Pineapple cakes, bubble tea snacks, Want Want
+  CHINA // White Rabbit, spicy strips, unique Lay's flavors
+  INDONESIA // Indomie, kripik, traditional crackers
+  PHILIPPINES // Dried mangoes, Choc Nut, polvoron
+  MEXICO // Takis, churros, spicy candies
+  INDIA // Mixture, bhel, spicy snacks
+  AUSTRALIA // Tim Tams, Shapes, Vegemite snacks
+  PERU // Chifles, Inca Corn, dried fruit snacks
+  SPAIN // Churros, jamón chips, olive snacks
+  SRI_LANKA // Unique snacks, traditional sweets, tea
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+  REFUNDED
+}
