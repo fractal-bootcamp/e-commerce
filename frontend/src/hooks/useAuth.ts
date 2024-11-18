@@ -1,4 +1,5 @@
 import { useAuth0 } from "@auth0/auth0-react";
+import { AUTH_REDIRECT_URI } from "@/utils/globals";
 
 export const useAuth = () => {
   const { isAuthenticated, loginWithRedirect, logout, user, getAccessTokenSilently, isLoading } =
@@ -16,7 +17,7 @@ export const useAuth = () => {
   return {
     isAuthenticated,
     login: loginWithRedirect,
-    logout: () => logout({ logoutParams: { returnTo: window.location.origin } }),
+    logout: () => logout({ logoutParams: { returnTo: AUTH_REDIRECT_URI } }),
     user,
     getToken,
     isLoading,

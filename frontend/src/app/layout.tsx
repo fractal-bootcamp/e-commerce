@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Navbar from "@/components/Navbar";
 import "./globals.css";
+import XAuthProvider from "@/components/XAuthProvider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -22,8 +23,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body suppressHydrationWarning className={`${geistSans.variable} antialiased`}>
-        <Navbar />
-        {children}
+        <XAuthProvider>
+          <Navbar />
+          {children}
+        </XAuthProvider>
       </body>
     </html>
   );

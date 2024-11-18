@@ -1,19 +1,17 @@
-import React from "react";
+"use client";
+
+import React, { PropsWithChildren } from "react";
 import { Auth0Provider } from "@auth0/auth0-react";
-import { AUTH_DOMAIN, AUTH_CLIENT_ID } from "@/utils/globals";
+import { AUTH_DOMAIN, AUTH_CLIENT_ID, AUTH_REDIRECT_URI } from "@/utils/globals";
 
-interface XAuthProviderProps {
-  children: JSX.Element;
-}
-
-const XAuthProvider = ({ children }: XAuthProviderProps) => {
+const XAuthProvider = ({ children }: PropsWithChildren) => {
   if (AUTH_DOMAIN && AUTH_CLIENT_ID) {
     return (
       <Auth0Provider
         domain={AUTH_DOMAIN}
         clientId={AUTH_CLIENT_ID}
         authorizationParams={{
-          redirect_uri: window.location.origin,
+          redirect_uri: AUTH_REDIRECT_URI,
           // audience: "",
         }}
       >
@@ -21,6 +19,7 @@ const XAuthProvider = ({ children }: XAuthProviderProps) => {
       </Auth0Provider>
     );
   }
+  return null;
 };
 
 export default XAuthProvider;
