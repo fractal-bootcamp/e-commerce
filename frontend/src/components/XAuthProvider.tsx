@@ -1,25 +1,24 @@
-"use client";
+import { createContext, useEffect, useState, ReactNode } from "react";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { auth } from "../firebase/firebaseConfig";
 
-import React, { PropsWithChildren } from "react";
-import { Auth0Provider } from "@auth0/auth0-react";
-import { AUTH_DOMAIN, AUTH_CLIENT_ID, AUTH_REDIRECT_URI } from "@/utils/globals";
+export interface AuthContextType {
+  user: User | null;
+}
+interface AuthProviderProps {
+  children: ReactNode;
+}
+export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-const XAuthProvider = ({ children }: PropsWithChildren) => {
-  if (AUTH_DOMAIN && AUTH_CLIENT_ID) {
-    return (
-      <Auth0Provider
-        domain={AUTH_DOMAIN}
-        clientId={AUTH_CLIENT_ID}
-        authorizationParams={{
-          redirect_uri: AUTH_REDIRECT_URI,
-          // audience: "",
-        }}
-      >
-        {children}
-      </Auth0Provider>
-    );
-  }
-  return null;
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  return <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>;
 };
-
-export default XAuthProvider;

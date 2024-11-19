@@ -3,7 +3,6 @@
 import Image from "next/image";
 import Link from "next/link";
 import XLoginButton from "./XLoginButton";
-import XLogoutButton from "./XLogoutButton";
 import { useState } from "react";
 
 export default function XNavbar() {
@@ -42,7 +41,6 @@ export default function XNavbar() {
               About
             </Link>
             <XLoginButton />
-            <XLogoutButton />
             <button className="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors font-medium flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
