@@ -11,7 +11,7 @@ export const getProductsFromCountry = async (req: Request, res: Response) => {
   res.status(200).json(response);
 };
 
-export const getSpecificProduct = async (req: Request, res: Response) => {
+export const getProduct = async (req: Request, res: Response) => {
   const { productId } = req.body;
   const response = await prisma.product.findUnique({
     where: {
