@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", verifyFirebaseToken, routesAuth);
-app.use("/product", verifyFirebaseToken, routesProduct);
+app.use("/product", routesProduct);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
