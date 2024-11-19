@@ -14,6 +14,15 @@ describe("POST /auth/signup", () => {
       .post("/auth/signup")
       .set("Authorization", `Bearer ${token}`);
     expect(response.status).toBe(200);
-    // expect(response.text).toMatch("Hello World!");
+    expect(response.body).toEqual({
+      id: expect.any(String),
+      auth0Id: expect.any(String),
+      email: expect.any(String),
+      name: null,
+      address: null,
+      createdAt: expect.any(String),
+      updatedAt: expect.any(String),
+      stripeCustomerId: null,
+    });
   });
 });
