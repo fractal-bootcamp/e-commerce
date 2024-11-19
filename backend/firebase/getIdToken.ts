@@ -1,6 +1,7 @@
 import admin from "firebase-admin";
 import { serviceAccount } from "./serviceAccount";
 import { generateUUID } from "../utils/generateUUID";
+import axios from "axios";
 
 if (!admin.apps.length) {
   admin.initializeApp({
@@ -16,7 +17,16 @@ export const getIdToken = async () => {
     emailVerified: true,
   });
 
-  const idToken = await admin.auth().createCustomToken(userCredential.uid);
+  const customToken = await admin.auth().createCustomToken(userCredential.uid);
 
+  const res = await axios({
+    method: "POST",
+    url: `https://identitytoolkit.googleapis.com/v1/accounts:signInWithCustomToken?key=${process.env.FIREBASE_WEB_API_KEY}`,
+    data: {
+      token: customToken,
+      returnSecureToken: true,
+    },
+  });
+  const idToken: string = res.data.idToken;
   return idToken;
 };
