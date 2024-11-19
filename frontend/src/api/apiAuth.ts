@@ -9,7 +9,7 @@ export const firebaseAuth = async () => {
 
   const res = await axios({
     method: "POST",
-    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/user/login`,
+    url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signup`,
     headers: {
       Authorization: `Bearer ${idToken}`,
     },
