@@ -5,25 +5,21 @@ const countries = [
   {
     name: 'India',
     flag: '/flags/india.png',
-    path: '/candies/india',
     description: 'Discover sweet and spicy Indian treats'
   },
   {
     name: 'Peru',
     flag: '/flags/peru.png',
-    path: '/candies/peru',
     description: 'Explore unique Peruvian delicacies'
   },
   {
     name: 'Sri Lanka',
     flag: '/flags/sri-lanka.png',
-    path: '/candies/sri-lanka',
     description: 'Experience tropical Sri Lankan sweets'
   },
   {
     name: 'Australia',
     flag: '/flags/australia.png',
-    path: '/candies/australia',
     description: 'Taste authentic Australian snacks'
   }
 ];
@@ -34,7 +30,7 @@ export default function CountrySelector() {
       {countries.map((country) => (
         <Link
           key={country.name}
-          href={country.path}
+          href={'/products'}
           className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
         >
           <div className="aspect-[4/3] sm:aspect-square relative">
