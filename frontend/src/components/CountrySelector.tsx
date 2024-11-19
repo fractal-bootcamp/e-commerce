@@ -30,7 +30,10 @@ export default function CountrySelector() {
       {countries.map((country) => (
         <Link
           key={country.name}
-          href={'/products'}
+          href={{
+            pathname: '/products',
+            query: { country: country.name.toLowerCase() },
+          }}
           className="group relative overflow-hidden rounded-xl bg-white shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
         >
           <div className="aspect-[4/3] sm:aspect-square relative">
