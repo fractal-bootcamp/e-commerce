@@ -1,7 +1,7 @@
 import { describe, expect, vi, it, beforeEach } from "vitest";
 import request from "supertest";
-import { app } from "../../server";
-import { getIdToken } from "../../firebase/getIdToken";
+import { app } from "../server";
+import { getIdToken } from "../firebase/getIdToken";
 
 describe("POST /product/getProductsFromCountry", () => {
   beforeEach(() => {
