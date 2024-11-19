@@ -1,6 +1,6 @@
 import { describe, expect, vi, it, beforeEach } from "vitest";
 import request from "supertest";
-import { app } from "../server"; // Ensure this path is correct
+import { app } from "../../server"; // Ensure this path is correct
 
 describe("GET /", () => {
   beforeEach(() => {
