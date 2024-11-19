@@ -2,6 +2,7 @@ import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 import { withLogging } from "../utils/withLogging";
 
+// Get all orders
 export const getAllOrders = withLogging(
   "getAllOrders",
   false,
@@ -11,6 +12,7 @@ export const getAllOrders = withLogging(
   }
 );
 
+// Get single order
 export const getOrder = withLogging("getOrder", false, async (req: Request, res: Response) => {
   const { orderId } = req.body;
   const response = await prisma.order.findUnique({
@@ -21,6 +23,7 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
   res.status(200).json(response);
 });
 
+// Add order
 export const addOrder = withLogging("addOrder", false, async (req: Request, res: Response) => {
   const { userId, total, orderStatus } = req.body;
   const response = await prisma.order.create({
@@ -33,6 +36,7 @@ export const addOrder = withLogging("addOrder", false, async (req: Request, res:
   res.status(200).json(response);
 });
 
+// Update order
 export const updateOrder = withLogging(
   "updateOrder",
   false,
@@ -46,6 +50,21 @@ export const updateOrder = withLogging(
         userId: userId,
         total: total,
         orderStatus: orderStatus,
+      },
+    });
+    res.status(200).json(response);
+  }
+);
+
+// Delete order
+export const deleteOrder = withLogging(
+  "deleteOrder",
+  false,
+  async (req: Request, res: Response) => {
+    const { orderId } = req.body;
+    const response = await prisma.order.delete({
+      where: {
+        id: orderId,
       },
     });
     res.status(200).json(response);
