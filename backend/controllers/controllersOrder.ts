@@ -70,3 +70,48 @@ export const deleteOrder = withLogging(
     res.status(200).json(response);
   }
 );
+
+// Update order products
+export const updateOrderProducts = withLogging(
+  "updateOrderProducts",
+  false,
+  async (req: Request, res: Response) => {
+    const { orderId, productIds, action } = req.body;
+    let prismaOperation;
+
+    switch (action) {
+      case "set":
+        prismaOperation = {
+          set: productIds.map((id: string) => ({ id })),
+        };
+        break;
+
+      case "add":
+        prismaOperation = {
+          connect: productIds.map((id: string) => ({ id })),
+        };
+        break;
+
+      case "remove":
+        prismaOperation = {
+          disconnect: productIds.map((id: string) => ({ id })),
+        };
+        break;
+
+      default:
+        res.status(400).json({ error: "Invalid action specified" });
+    }
+
+    const updatedOrder = await prisma.order.update({
+      where: { id: orderId },
+      data: {
+        products: prismaOperation,
+      },
+      include: {
+        products: true,
+      },
+    });
+
+    res.status(200).json(updatedOrder);
+  }
+);
