@@ -5,48 +5,61 @@ import * as dotenv from "dotenv";
 dotenv.config();
 const cloudinary = require('cloudinary').v2;
 
-// Configure Cloudinary with your credentials
-console.log('Cloudinary Config:', {
-  cloud_name: "ds4kobyhb",
-  api_key: "121178929136957",
-  api_secret: "Iw3dyB8dlR0U6uZVzkSB1K8Ht6w" // Don't log the actual secret
-});
-
 cloudinary.config({
-  cloud_name: "ds4kobyhb",
-  api_key: "121178929136957",
-  api_secret: "Iw3dyB8dlR0U6uZVzkSB1K8Ht6w"
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-async function getAssetUrls(folderPath = '') {
+// Add type for Cloudinary resource
+interface CloudinaryResource {
+  public_id: string;
+  format: string;
+  display_name?: string;
+}
+
+// Add type for Cloudinary API response
+interface CloudinaryApiResponse {
+  resources: CloudinaryResource[];
+  next_cursor: string | null;
+}
+
+// Add type for our URL object
+interface AssetUrl {
+  public_id: string;
+  url: string;
+  filename: string;
+}
+
+async function getAssetUrls(folderPath: string = ''): Promise<AssetUrl[]> {
   try {
-    const urls = [];
-    let nextCursor = null;
+    const urls: AssetUrl[] = [];
+    let nextCursor: string | null = null;
     
     do {
       // Get a batch of assets
-      const result = await cloudinary.api.resources({
+      const result: CloudinaryApiResponse = await cloudinary.api.resources({
         type: 'upload',
-        prefix: 'snack-safari', // Specify folder path if needed
+        prefix: 'snack-safari',
         max_results: 500,
         next_cursor: nextCursor
       });
 
       // Generate and store public URLs for each asset
-      result.resources.forEach(resource => {
-        const publicUrl = cloudinary.url(resource.public_id, {
+      result.resources.forEach((resource: CloudinaryResource) => {
+        const publicUrl: string = cloudinary.url(resource.public_id, {
           resource_type: 'image',
           format: resource.format
         });
         urls.push({
           public_id: resource.public_id,
           url: publicUrl,
-          filename: resource.display_name // fallback to public_id if filename is not available
+          filename: resource.display_name || resource.public_id
         });
       });
 
       nextCursor = result.next_cursor;
-    } while (nextCursor); // Continue until all assets are processed
+    } while (nextCursor);
 
     return urls;
   } catch (error) {
