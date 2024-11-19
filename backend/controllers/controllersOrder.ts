@@ -1,6 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 import { withLogging } from "../utils/withLogging";
+import type { OrderStatus } from "../types/types";
 
 // Get all orders
 export const getAllOrders = withLogging(
@@ -25,12 +26,13 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
 
 // Add order
 export const addOrder = withLogging("addOrder", false, async (req: Request, res: Response) => {
-  const { userId, total, orderStatus } = req.body;
+  const { auth0Id, total, orderStatus } = req.body;
+  const orderStatusTyped: OrderStatus = orderStatus;
   const response = await prisma.order.create({
     data: {
-      userId: userId,
+      userId: auth0Id,
       total: total,
-      orderStatus: orderStatus,
+      orderStatus: orderStatusTyped,
     },
   });
   res.status(200).json(response);
@@ -41,15 +43,16 @@ export const updateOrder = withLogging(
   "updateOrder",
   false,
   async (req: Request, res: Response) => {
-    const { orderId, userId, total, orderStatus } = req.body;
+    const { orderId, auth0Id, total, orderStatus } = req.body;
+    const orderStatusTyped: OrderStatus = orderStatus;
     const response = await prisma.order.update({
       where: {
         id: orderId,
       },
       data: {
-        userId: userId,
+        userId: auth0Id,
         total: total,
-        orderStatus: orderStatus,
+        orderStatus: orderStatusTyped,
       },
     });
     res.status(200).json(response);
@@ -97,9 +100,6 @@ export const updateOrderProducts = withLogging(
           disconnect: productIds.map((id: string) => ({ id })),
         };
         break;
-
-      default:
-        res.status(400).json({ error: "Invalid action specified" });
     }
 
     const updatedOrder = await prisma.order.update({
