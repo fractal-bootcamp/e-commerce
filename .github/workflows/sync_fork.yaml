@@ -10,20 +10,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Fork
+      - name: Checkout Parent Repository
         uses: actions/checkout@v3
-        with:
-          ref: main
 
-      - name: Set Upstream
+      - name: Add Fork Remote
         run: |
-          git remote add upstream https://github.com/fractal-bootcamp/snack-safari.git
-          git fetch upstream
+          git remote add fork https://github.com/adesai47/snack-safari.git
+          git fetch fork
 
-      - name: Sync with Upstream
+      - name: Push Updates to Fork
         run: |
-          git checkout main
-          git merge upstream/main
-          git push origin main
+          git push fork main:main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
