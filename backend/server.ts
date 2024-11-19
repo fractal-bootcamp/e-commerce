@@ -13,21 +13,6 @@ app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-// app.post("/authenticate", verifyFirebaseToken, (req, res) => {
-//   const firebaseId = req.body.firebaseId;
-//   res.status(200).json({ firebaseId: firebaseId });
-// });
-
-// app.post("/user/login", verifyFirebaseToken, async (req, res) => {
-//   const { firebaseId, email } = req.body;
-//   res.status(200).json({ firebaseId: firebaseId, email: email });
-// });
-
-// app.post("/user/signup", verifyFirebaseToken, async (req, res) => {
-//   const { firebaseId, email } = req.body;
-//   res.status(200).json({ firebaseId: firebaseId, email: email });
-// });
-
 app.use("/auth", verifyFirebaseToken, routesAuth);
 
 app.listen(PORT, () => {
