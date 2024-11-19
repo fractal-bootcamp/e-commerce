@@ -1,0 +1,10 @@
+shapes_original: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/bckudvwcy4d9njhrkoae.jpg?_a=BAMCkGJu0
+lemon_puffs: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/dhmlcoxpsnd4pyjocdlb.png?_a=BAMCkGJu0
+aloo_bhujia: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/g6ug1iq6nk2heuhhqo03.jpg?_a=BAMCkGJu0
+red_rock_deli_sour_cream: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/gyju9qrdvemcw36mup35.png?_a=BAMCkGJu0
+sublime_chocolate: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/hwugm6svvtfnx1mr2nyz.jpg?_a=BAMCkGJu0
+casava_chips_kocchi: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/op6ytqajklvekbdblugd.jpg?_a=BAMCkGJu0
+soan_papdi: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/p89z92528hbssthkckkc.png?_a=BAMCkGJu0
+inka_corn: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/pogm7ftydweqi1yxjtsl.png?_a=BAMCkGJu0
+tim_tams: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/pqsxcqct1dhvwgvtnhpu.jpg?_a=BAMCkGJu0
+masala_munch: https://res.cloudinary.com/ds4kobyhb/image/upload/v1/snack-safari/q7ftdqokkn5nq1abfid4.jpg?_a=BAMCkGJu0
