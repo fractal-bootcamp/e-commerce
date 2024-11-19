@@ -1,51 +1,23 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useCartStore } from '@/app/store/cartStore';
 import Image from 'next/image';
 
-interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  quantity: number;
-  imageUrl: string;
-  country: string;
-}
-
 export default function Cart() {
-  const [cartItems, setCartItems] = useState<CartItem[]>([]);
-  const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    const newTotal = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-    setTotal(newTotal);
-  }, [cartItems]);
-
-  const updateQuantity = (id: string, newQuantity: number) => {
-    if (newQuantity < 1) return;
-    setCartItems(items =>
-      items.map(item =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
-      )
-    );
-  };
-
-  const removeItem = (id: string) => {
-    setCartItems(items => items.filter(item => item.id !== id));
-  };
+  const { items, total, updateQuantity, removeItem } = useCartStore();
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-amber-800 mb-8">Your Cart</h1>
       
-      {cartItems.length === 0 ? (
+      {items.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">Your cart is empty</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2">
-            {cartItems.map((item) => (
+            {items.map((item) => (
               <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div className="relative w-24 h-24">
                   <Image
@@ -117,4 +89,4 @@ export default function Cart() {
       )}
     </div>
   );
-} 
+}
