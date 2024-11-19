@@ -1,25 +1,25 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { AUTH_REDIRECT_URI } from "@/utils/globals";
+import { auth } from "@/firebase/firebaseConfig";
+import { onAuthStateChanged, User } from "firebase/auth";
+import { useEffect, useState } from "react";
 
 export const useAuth = () => {
-  const { isAuthenticated, loginWithRedirect, logout, user, getAccessTokenSilently, isLoading } =
-    useAuth0();
+  const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
+  const [idToken, setIdToken] = useState<string | null>(null);
 
-  const getToken = async () => {
-    try {
-      return await getAccessTokenSilently();
-    } catch (error) {
-      console.error("Error getting token: ", error);
-      return null;
-    }
-  };
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setFirebaseUser(currentUser);
+      const getIdToken = async () => {
+        const token = await auth.currentUser?.getIdToken(true);
+        if (token) {
+          setIdToken(token);
+        }
+      };
+      getIdToken();
+    });
 
-  return {
-    isAuthenticated,
-    login: loginWithRedirect,
-    logout: () => logout({ logoutParams: { returnTo: AUTH_REDIRECT_URI } }),
-    user,
-    getToken,
-    isLoading,
-  };
+    return () => unsubscribe();
+  }, []);
+
+  return { firebaseUser, idToken };
 };
