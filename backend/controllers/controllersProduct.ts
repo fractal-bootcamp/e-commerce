@@ -51,7 +51,7 @@ const product = {
   "product": {
     "name": "Kurkure Masala Munch",
     "description": "Crunchy corn puffs with authentic Indian spices",
-    "imageUrl": "https://storage.googleapis.com/your-bucket/products/KurKureMasalaMunch.jpeg", // Remote URL
+    "imageUrl": "https://res.cloudinary.com/ds4kobyhb/image/upload/v1732043048/snack-safari/q7ftdqokkn5nq1abfid4.jpg", // Remote URL
     "country": "INDIA", // Assuming your enum uses uppercase
     "category": "Snacks",
     "inventory_count": 100,
