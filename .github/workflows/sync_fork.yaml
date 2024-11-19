@@ -19,5 +19,7 @@ jobs:
           git fetch fork
 
       - name: Push Updates to Fork
+        env:
+          PAT: ${{ secrets.PAT }}
         run: |
-          git push https://adesai47:${{ secrets.PAT }}@github.com/adesai47/snack-safari.git main:main
+          git push https://adesai47:$PAT@github.com/adesai47/snack-safari.git main:main
