@@ -44,7 +44,10 @@ export default function XNavbar() {
             </Link>
             <XLoginButton />
             <XLogoutButton />
-            <button className="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors font-medium flex items-center gap-2">
+            <Link 
+              href="/cart"
+              className="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors font-medium flex items-center gap-2"
+            >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 fill="none" 
@@ -60,7 +63,7 @@ export default function XNavbar() {
                 />
               </svg>
               Cart
-            </button>
+            </Link>
           </div>
 
           {/* Mobile menu button - moved to the right */}
@@ -128,7 +131,10 @@ export default function XNavbar() {
             <div className="px-3">
               <XLogoutButton />
             </div>
-            <button className="bg-amber-500 text-white mx-3 px-4 py-2 rounded-full hover:bg-amber-600 transition-all duration-200 font-medium flex items-center gap-2 justify-center transform hover:scale-105">
+            <Link 
+              href="/cart"
+              className="bg-amber-500 text-white px-4 py-2 rounded-full hover:bg-amber-600 transition-colors font-medium flex items-center gap-2"
+            >
               <svg 
                 xmlns="http://www.w3.org/2000/svg" 
                 fill="none" 
@@ -144,7 +150,7 @@ export default function XNavbar() {
                 />
               </svg>
               Cart
-            </button>
+            </Link>
           </div>
         </div>
       </div>
