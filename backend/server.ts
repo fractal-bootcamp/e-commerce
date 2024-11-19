@@ -1,27 +1,31 @@
-import express from "express";
 import { PORT } from "./globals";
-import { config } from "./auth/config";
-import { auth, requiresAuth } from "express-openid-connect";
+import { jwtCheck } from "./middleware/middleware";
+import express from "express";
 
-export const app = express();
+const app = express();
 const cors = require("cors");
+
+const port = PORT;
 
 app.use(cors());
 app.use(express.json());
-app.use(auth(config));
 
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello world!");
 });
 
-app.get("/authcheck", (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+app.get("/public", (req, res) => {
+  res.status(200).json({
+    message: "Public endpoint",
+  });
 });
 
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
+app.get("/authenticated", jwtCheck, (req, res) => {
+  res.status(200).json({
+    message: "Authenticated endpoint",
+  });
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+app.listen(port, () => {
+  console.log(`Server running at http://localhost:${port}`);
 });

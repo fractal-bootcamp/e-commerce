@@ -1,8 +1,10 @@
+import * as dotenv from "dotenv";
+
+dotenv.config();
+
 // Express
 export const PORT = process.env.PORT;
 
 // Auth
-export const BASE_URL = process.env.BASE_URL;
-export const CLIENT_ID = process.env.CLIENT_ID;
-export const ISSUER_BASE_URL = process.env.ISSUER_BASE_URL;
-export const CLIENT_SECRET = process.env.CLIENT_SECRET;
+export const AUTH_API_IDENTIFIER = process.env.AUTH_API_IDENTIFIER;
+export const AUTH_ISSUER_BASE_URL = process.env.AUTH_ISSUER_BASE_URL;

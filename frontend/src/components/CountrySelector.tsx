@@ -1,31 +1,33 @@
-import Image from 'next/image';
-import Link from 'next/link';
+"use client";
+
+import Image from "next/image";
+import Link from "next/link";
 
 const countries = [
   {
-    name: 'India',
-    flag: '/flags/india.png',
-    path: '/candies/india',
-    description: 'Discover sweet and spicy Indian treats'
+    name: "India",
+    flag: "/flags/india.png",
+    path: "/candies/india",
+    description: "Discover sweet and spicy Indian treats",
   },
   {
-    name: 'Peru',
-    flag: '/flags/peru.png',
-    path: '/candies/peru',
-    description: 'Explore unique Peruvian delicacies'
+    name: "Peru",
+    flag: "/flags/peru.png",
+    path: "/candies/peru",
+    description: "Explore unique Peruvian delicacies",
   },
   {
-    name: 'Sri Lanka',
-    flag: '/flags/sri-lanka.png',
-    path: '/candies/sri-lanka',
-    description: 'Experience tropical Sri Lankan sweets'
+    name: "Sri Lanka",
+    flag: "/flags/sri-lanka.png",
+    path: "/candies/sri-lanka",
+    description: "Experience tropical Sri Lankan sweets",
   },
   {
-    name: 'Australia',
-    flag: '/flags/australia.png',
-    path: '/candies/australia',
-    description: 'Taste authentic Australian snacks'
-  }
+    name: "Australia",
+    flag: "/flags/australia.png",
+    path: "/candies/australia",
+    description: "Taste authentic Australian snacks",
+  },
 ];
 
 export default function CountrySelector() {
@@ -54,4 +56,4 @@ export default function CountrySelector() {
       ))}
     </div>
   );
-} 
+}
