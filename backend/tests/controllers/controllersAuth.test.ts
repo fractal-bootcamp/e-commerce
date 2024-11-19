@@ -10,6 +10,7 @@ describe("POST /auth/signup", () => {
 
   it("should return 200 and firebaseId", async () => {
     const token = await getIdToken();
+    console.log(token);
     const response = await request(app)
       .post("/auth/signup")
       .set("Authorization", `Bearer ${token}`);
@@ -24,5 +25,7 @@ describe("POST /auth/signup", () => {
       updatedAt: expect.any(String),
       stripeCustomerId: null,
     });
+
+    // console.log(response.body);
   });
 });
