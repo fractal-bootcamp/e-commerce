@@ -1,0 +1,25 @@
+name: Sync Fork
+
+on:
+  schedule:
+    - cron: "0 * * * *"
+  workflow_dispatch:
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Parent Repository
+        uses: actions/checkout@v3
+
+      - name: Add Fork Remote
+        run: |
+          git remote add fork https://github.com/adesai47/snack-safari.git
+          git fetch fork
+
+      - name: Push Updates to Fork
+        env:
+          PAT: ${{ secrets.PAT }}
+        run: |
+          git push https://adesai47:$PAT@github.com/adesai47/snack-safari.git main:main

@@ -1,5 +1,5 @@
-import express from "express";
 import { PORT } from "./globals";
+import express from "express";
 import { verifyFirebaseToken } from "./firebase/middleware";
 import routesAuth from "./routes/routesAuth";
 import routesProduct from "./routes/routesProduct";
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/auth", verifyFirebaseToken, routesAuth);
-app.use("/product", routesProduct);
+app.use("/product", verifyFirebaseToken, routesProduct);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
