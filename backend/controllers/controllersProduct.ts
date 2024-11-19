@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 import { withLogging } from "../utils/withLogging";
-import type { CreateProductProps } from "../types/types";
+import type { CreateProductProps } from "../types/schema";
 
 export const getProductsFromCountry = withLogging(
   "getProductsFromCountry",

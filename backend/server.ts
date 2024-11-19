@@ -5,8 +5,10 @@ import routesAuth from "./routes/routesAuth";
 import routesProduct from "./routes/routesProduct";
 import routesOrder from "./routes/routesOrder";
 
+
 export const app = express();
 const cors = require("cors");
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
 
 app.use(cors());
 app.use(express.json());
