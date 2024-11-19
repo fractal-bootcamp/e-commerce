@@ -1,25 +1,30 @@
 import express from "express";
 import { PORT } from "./globals";
-import { config } from "./auth/config";
-import { auth, requiresAuth } from "express-openid-connect";
+import { verifyFirebaseToken } from "./firebase/middleware";
 
 export const app = express();
 const cors = require("cors");
 
 app.use(cors());
 app.use(express.json());
-app.use(auth(config));
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
 });
 
-app.get("/authcheck", (req, res) => {
-  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+app.post("/authenticate", verifyFirebaseToken, (req, res) => {
+  const firebaseId = req.body.firebaseId;
+  res.status(200).json({ firebaseId: firebaseId });
 });
 
-app.get("/profile", requiresAuth(), (req, res) => {
-  res.send(JSON.stringify(req.oidc.user, null, 2));
+app.post("/user/login", verifyFirebaseToken, async (req, res) => {
+  const { firebaseId, email } = req.body;
+  res.status(200).json({ firebaseId: firebaseId, email: email });
+});
+
+app.post("/user/signup", verifyFirebaseToken, async (req, res) => {
+  const { firebaseId, email } = req.body;
+  res.status(200).json({ firebaseId: firebaseId, email: email });
 });
 
 app.listen(PORT, () => {

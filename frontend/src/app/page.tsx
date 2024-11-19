@@ -1,7 +1,14 @@
+"use client";
+
 import CountrySelector from "@/components/CountrySelector";
+import { useAuth } from "@/hooks/useAuth";
 import Image from "next/image";
 
 export default function Home() {
+  const { idToken, firebaseUser } = useAuth();
+  console.log(idToken);
+  console.log(firebaseUser);
+
   return (
     <div>
       <main className="min-h-screen bg-amber-50">
@@ -13,6 +20,8 @@ export default function Home() {
             <p className="text-base sm:text-lg text-amber-700">
               Embark on a global adventure of flavors! Choose your destination below.
             </p>
+            <p className="text-black">{idToken}</p>
+            <p className="text-black">{firebaseUser?.email}</p>
           </div>
         </div>
       </main>
