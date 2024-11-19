@@ -30,3 +30,6 @@ export const getIdToken = async () => {
   const idToken: string = res.data.idToken;
   return idToken;
 };
+
+const res = await getIdToken();
+console.log(res);
