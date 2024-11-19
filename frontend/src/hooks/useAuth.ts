@@ -1,10 +1,13 @@
 import { auth } from "@/firebase/firebaseConfig";
-import { onAuthStateChanged, User } from "firebase/auth";
+import { onAuthStateChanged, User, signOut } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const useAuth = () => {
   const [firebaseUser, setFirebaseUser] = useState<User | null>(null);
   const [idToken, setIdToken] = useState<string | null>(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -21,5 +24,10 @@ export const useAuth = () => {
     return () => unsubscribe();
   }, []);
 
-  return { firebaseUser, idToken };
+  const handleLogout = async () => {
+    await signOut(auth);
+    router.push("/");
+  };
+
+  return { firebaseUser, idToken, handleLogout };
 };
