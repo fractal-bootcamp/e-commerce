@@ -3,6 +3,7 @@ import express from "express";
 import { verifyFirebaseToken } from "./firebase/middleware";
 import routesAuth from "./routes/routesAuth";
 import routesProduct from "./routes/routesProduct";
+import routesOrder from "./routes/routesOrder";
 
 export const app = express();
 const cors = require("cors");
@@ -16,6 +17,7 @@ app.get("/", (req, res) => {
 
 app.use("/auth", verifyFirebaseToken, routesAuth);
 app.use("/product", verifyFirebaseToken, routesProduct);
+app.use("/order", verifyFirebaseToken, routesOrder);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);
