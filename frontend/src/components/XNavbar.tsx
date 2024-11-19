@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import XLoginButton from "./XLoginButton";
-import XLogoutButton from "./XLogoutButton";
 import { useState } from "react";
+import XLogoutButton from "./XLogoutButton";
 
 export default function XNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);

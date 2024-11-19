@@ -1,12 +1,9 @@
-"use client";
-
-import { useAuth } from "@/hooks/useAuth";
+import { firebaseAuth } from "@/api/apiAuth";
 import React from "react";
 
 const XLoginButton = () => {
-  const { login } = useAuth();
   return (
-    <button onClick={() => login()} className="text-black">
+    <button onClick={firebaseAuth} className="text-black">
       Login
     </button>
   );

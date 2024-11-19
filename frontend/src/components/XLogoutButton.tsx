@@ -1,13 +1,11 @@
-"use client";
-
 import { useAuth } from "@/hooks/useAuth";
 import React from "react";
 
 const XLogoutButton = () => {
-  const { logout } = useAuth();
+  const { handleLogout } = useAuth();
   return (
-    <button onClick={logout} className="text-black">
-      Log Out
+    <button onClick={handleLogout} className="text-black">
+      Logout
     </button>
   );
 };
