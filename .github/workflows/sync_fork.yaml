@@ -20,6 +20,6 @@ jobs:
 
       - name: Push Updates to Fork
         run: |
-          git push fork main:main
+          git push https://adesai47:${{ secrets.PAT }}@github.com/adesai47/snack-safari.git main:main
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
