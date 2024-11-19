@@ -32,3 +32,22 @@ export const addOrder = withLogging("addOrder", false, async (req: Request, res:
   });
   res.status(200).json(response);
 });
+
+export const updateOrder = withLogging(
+  "updateOrder",
+  false,
+  async (req: Request, res: Response) => {
+    const { orderId, userId, total, orderStatus } = req.body;
+    const response = await prisma.order.update({
+      where: {
+        id: orderId,
+      },
+      data: {
+        userId: userId,
+        total: total,
+        orderStatus: orderStatus,
+      },
+    });
+    res.status(200).json(response);
+  }
+);
