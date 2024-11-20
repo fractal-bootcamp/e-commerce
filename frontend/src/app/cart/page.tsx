@@ -1,6 +1,7 @@
 "use client";
 
 import { useCartStore } from '@/app/store/cartStore';
+import { useStripeStore } from '@/app/store/stripeStore';
 import Image from 'next/image';
 import { z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
@@ -20,6 +21,7 @@ const createPaymentIntentSchema = z.object({
 
 export default function Cart() {
   const { items, total, updateQuantity, removeItem } = useCartStore();
+  const { setClientSecret, setPaymentIntentId } = useStripeStore();
   const { idToken } = useAuth();
 
   const handleTestStripeIntegration = async () => {
@@ -60,7 +62,10 @@ export default function Cart() {
       });
 
       const data = await response.json();
-      console.log('returned data', data);
+      setClientSecret(data.clientSecret);
+      console.log('client secret', data.clientSecret);
+      setPaymentIntentId(data.paymentIntentId);
+      console.log('payment intent id', data.paymentIntentId);
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error('Validation error:', error.errors);
