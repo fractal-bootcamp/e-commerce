@@ -1,8 +1,9 @@
 "use client";
 
 import CountrySelector from "@/components/CountrySelector";
+import XAIChat from "@/components/XAIChat";
 import { useAuth } from "@/hooks/useAuth";
-import Image from "next/image";
+// import Image from "next/image";
 
 export default function Home() {
   const { idToken, firebaseUser } = useAuth();
@@ -20,6 +21,7 @@ export default function Home() {
             <p className="text-base sm:text-lg text-amber-700">
               Embark on a global adventure of flavors! Choose your destination below.
             </p>
+            <XAIChat />
           </div>
         </div>
       </main>

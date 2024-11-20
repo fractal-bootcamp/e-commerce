@@ -5,6 +5,8 @@
   "devDependencies": {
     "@faker-js/faker": "^9.2.0",
     "@types/bun": "latest",
+    "@types/pg": "^8.11.10",
+    "@types/stripe": "^8.0.416",
     "@types/supertest": "^6.0.2",
     "supertest": "^7.0.0",
     "vitest": "^2.1.5"
@@ -23,6 +25,8 @@
     "express": "^4.21.1",
     "express-openid-connect": "^2.17.1",
     "firebase-admin": "^13.0.0",
+    "openai": "^4.72.0",
+    "pg": "^8.13.1",
     "prisma": "^5.22.0",
     "stripe": "^17.3.1",
     "zod": "^3.23.8"

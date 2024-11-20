@@ -1,7 +1,7 @@
 import type { Request, Response } from "express";
 import prisma from "../prisma/client";
 import { withLogging } from "../utils/withLogging";
-import type { OrderStatus } from "../types/types";
+import type { OrderStatus } from "../types/schema";
 
 // Get all orders
 export const getAllOrders = withLogging(
