@@ -14,16 +14,16 @@ export const initializeDatabase = async () => {
   try {
     await client.query("CREATE EXTENSION IF NOT EXISTS vector");
 
+    // Drop existing table
+    await client.query("DROP TABLE IF EXISTS documents");
+
     await client.query(`
       CREATE TABLE IF NOT EXISTS documents (
         id SERIAL PRIMARY KEY,
         content TEXT NOT NULL,
-        embedding vector(8191)
+        embedding vector(1536)
       )`);
   } finally {
     client.release();
   }
-
-  // don't do this in production
-  await client.query("DELETE FROM documents");
 };
