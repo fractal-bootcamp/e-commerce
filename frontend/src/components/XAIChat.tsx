@@ -1,5 +1,6 @@
 "use client";
 
+import { ragQuery } from "@/api/apiRag";
 import React, { useState } from "react";
 
 const XAIChat = () => {
@@ -12,6 +13,9 @@ const XAIChat = () => {
     if (query !== "") {
       setMessages((prev) => [...prev, query]);
       setQuery("");
+      const queryResponse: string[] = await ragQuery(query);
+      setMessages((prev) => [...prev, ...queryResponse]);
+      console.log(queryResponse);
       setError(false);
     } else {
       setError(true);
