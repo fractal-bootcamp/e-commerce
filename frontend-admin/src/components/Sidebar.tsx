@@ -1,8 +1,10 @@
 "use client";
 
-import Link from 'next/link';
-import { useState } from 'react';
-import React from 'react';
+import Link from "next/link";
+import { useState } from "react";
+import React from "react";
+import XLoginButton from "./XLoginButton";
+import XLogoutButton from "./XLogoutButton";
 
 interface MenuItem {
   label: string;
@@ -12,17 +14,17 @@ interface MenuItem {
 }
 
 export default function Sidebar() {
-  const [expandedMenu, setExpandedMenu] = useState<string | null>('Orders');
+  const [expandedMenu, setExpandedMenu] = useState<string | null>("Orders");
 
   const menuItems: MenuItem[] = [
     {
-      label: 'Orders',
-      icon: '📦',
-      href: '#',
+      label: "Orders",
+      icon: "📦",
+      href: "#",
       submenu: [
-        { label: 'All Orders', icon: '📋', href: '/orders' },
-        { label: 'Add New Order', icon: '➕', href: '/orders/new' },
-      ]
+        { label: "All Orders", icon: "📋", href: "/orders" },
+        { label: "Add New Order", icon: "➕", href: "/orders/new" },
+      ],
     },
   ];
 
@@ -33,6 +35,12 @@ export default function Sidebar() {
         <span className="text-xl font-semibold">Snack Safari Admin</span>
       </div>
 
+      {/* Login/Logout */}
+      <div className="flex flex-col space-y-2 p-2">
+        <XLoginButton />
+        <XLogoutButton />
+      </div>
+
       {/* Navigation Menu */}
       <nav className="mt-4">
         {menuItems.map((item) => (
@@ -40,14 +48,12 @@ export default function Sidebar() {
             <button
               onClick={() => setExpandedMenu(expandedMenu === item.label ? null : item.label)}
               className={`w-full flex items-center gap-2 px-6 py-3 hover:bg-gray-700 transition-colors
-                ${expandedMenu === item.label ? 'bg-gray-700' : ''}`}
+                ${expandedMenu === item.label ? "bg-gray-700" : ""}`}
             >
               <span>{item.icon}</span>
               <span>{item.label}</span>
               {item.submenu && (
-                <span className="ml-auto">
-                  {expandedMenu === item.label ? '▼' : '▶'}
-                </span>
+                <span className="ml-auto">{expandedMenu === item.label ? "▼" : "▶"}</span>
               )}
             </button>
 
@@ -70,4 +76,4 @@ export default function Sidebar() {
       </nav>
     </div>
   );
-} 
+}
