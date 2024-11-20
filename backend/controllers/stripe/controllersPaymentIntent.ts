@@ -6,9 +6,16 @@ import { createPaymentIntent } from '../../services/stripe/payment-intent.servic
 import type { PaymentIntentResponse } from '../../types/stripe';
 import type { Request, Response } from 'express';
 import { withLogging } from "../../utils/withLogging";
+import { calculateOrderAmount } from '../../utils/calculate-total';
 
 const createPaymentIntentSchema = z.object({
-  amount: z.number(),
+  cart: z.object({
+    items: z.array(z.object({
+      id: z.string(),
+      quantity: z.number(),
+      priceInCents: z.number(),
+    })),
+  }),
   currency: z.string(),
   metadata: z.record(z.string(), z.string()),
   orderId: z.string(),
@@ -17,7 +24,9 @@ const createPaymentIntentSchema = z.object({
 export const handleCreatePaymentIntent = withLogging("handleCreatePaymentIntent", false, async (req: Request, res: Response) => {
   try {
     // validate the request body
-    const { amount, currency, metadata, orderId } = createPaymentIntentSchema.parse(req.body);
+    const { cart, currency, metadata, orderId } = createPaymentIntentSchema.parse(req.body);
+    // calculate the total to charge the customer
+    const amount = calculateOrderAmount(cart);
     // create the payment intent
     const paymentIntent: PaymentIntentResponse = await createPaymentIntent({ amount, currency, metadata, orderId });
     // return the payment intent

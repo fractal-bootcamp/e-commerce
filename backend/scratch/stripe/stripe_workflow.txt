@@ -1,0 +1,39 @@
+Customer goes to payment page
+|
+Client
+|
+Send order information to server
+|
+Server
+|
+POST /v1/payment_intent
+|
+Stripe
+|
+return new PaymentIntent
+|
+Server
+|
+return PaymentIntent (client secret)
+|
+Client
+
+###
+
+Customer provides billing infromation and finalises payment
+|
+Client
+|
+stripe.confirmPayment() w Elements instance
+|
+Stripe
+|
+attempt payment
+|
+redirect to return_url page
+|
+Client
+|
+display payment status
+|
+Customer
