@@ -14,7 +14,7 @@ export default function PaymentPage() {
   const { clientSecret } = useStripeStore();
 
   if (!clientSecret) {
-    console.log('No client secret');
+    console.log('No client secret found in global state');
     notFound();
   }
 
