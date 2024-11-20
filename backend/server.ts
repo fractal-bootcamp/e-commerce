@@ -21,7 +21,7 @@ app.use("/auth", verifyFirebaseToken, routesAuth);
 app.use("/product", verifyFirebaseToken, routesProduct);
 app.use("/order", verifyFirebaseToken, routesOrder);
 app.use("/payment", verifyFirebaseToken, routesPayment);
-app.use("/rag", routesRag);
+app.use("/rag", verifyFirebaseToken, routesRag);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import request from "supertest";
 import { app } from "../server";
 import { getIdToken } from "../firebase/getIdToken";
-import { OrderStatus } from "../types/types";
+import { OrderStatus } from "@prisma/client";
 
 const token = await getIdToken();
 const testAuth0Id = "eGseBlc8nweo32FfpNPi56IdtnS2";
