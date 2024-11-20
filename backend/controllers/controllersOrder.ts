@@ -8,7 +8,17 @@ export const getAllOrders = withLogging(
   "getAllOrders",
   false,
   async (req: Request, res: Response) => {
-    const response = await prisma.order.findMany({});
+    const response = await prisma.order.findMany({
+      include: {
+        products: {
+          select: {
+            id: true,
+            name: true,
+            price: true,
+          },
+        },
+      },
+    });
     res.status(200).json(response);
   }
 );
@@ -19,6 +29,15 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
   const response = await prisma.order.findUnique({
     where: {
       id: orderId,
+    },
+    include: {
+      products: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+        },
+      },
     },
   });
   res.status(200).json(response);
