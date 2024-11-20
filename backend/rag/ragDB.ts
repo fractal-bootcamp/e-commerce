@@ -3,11 +3,8 @@ import { Pool } from "pg";
 // Generate pool
 export const pool = async () => {
   return new Pool({
-    user: "postgres",
-    password: "postgres",
-    host: "localhost",
-    port: 15432,
-    database: "ragdemo",
+    connectionString: process.env.RAG_DATABASE_URL, // Neon connection string
+    ssl: { rejectUnauthorized: false }, // Required for Neon
   });
 };
 
@@ -21,7 +18,7 @@ export const initializeDatabase = async () => {
       CREATE TABLE IF NOT EXISTS documents (
         id SERIAL PRIMARY KEY,
         content TEXT NOT NULL,
-        embedding vector(1536)
+        embedding vector(8191)
       )`);
   } finally {
     client.release();
