@@ -10,5 +10,9 @@ const firebaseConfig = {
   appId: process.env.NEXT_PUBLIC_APP_ID,
   measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID,
 };
-const app = initializeApp(firebaseConfig);
+
+const app = initializeApp(firebaseConfig, "admin");
+
+export const ALLOWED_ADMIN_EMAILS = ["dgavidia1@gmail.com"];
+
 export const auth = getAuth(app);
