@@ -7,6 +7,8 @@ export const firebaseAuth = async () => {
   const result = await signInWithPopup(auth, provider);
   const idToken = await result.user.getIdToken();
 
+  console.log(result.user.email);
+
   if (!ALLOWED_ADMIN_EMAILS.includes(result.user.email!)) {
     await result.user.delete();
     throw new Error("Unauthorized email address");

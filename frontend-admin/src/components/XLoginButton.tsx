@@ -3,7 +3,7 @@ import React from "react";
 
 const XLoginButton = () => {
   return (
-    <button onClick={firebaseAuth} className="text-black">
+    <button onClick={firebaseAuth} className="text-white">
       Login
     </button>
   );
