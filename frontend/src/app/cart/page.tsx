@@ -5,6 +5,7 @@ import { useStripeStore } from '@/app/store/stripeStore';
 import Image from 'next/image';
 import { z } from 'zod';
 import { useAuth } from '@/hooks/useAuth';
+import { useRouter } from 'next/navigation';
 
 const createPaymentIntentSchema = z.object({
   cart: z.object({
@@ -20,6 +21,7 @@ const createPaymentIntentSchema = z.object({
 });
 
 export default function Cart() {
+  const router = useRouter();
   const { items, total, updateQuantity, removeItem } = useCartStore();
   const { setClientSecret, setPaymentIntentId } = useStripeStore();
   const { idToken } = useAuth();
@@ -62,10 +64,21 @@ export default function Cart() {
       });
 
       const data = await response.json();
+      // store payment options in global state  
       setClientSecret(data.clientSecret);
       console.log('client secret', data.clientSecret);
+      // store payment intent id in global state  
       setPaymentIntentId(data.paymentIntentId);
       console.log('payment intent id', data.paymentIntentId);
+
+      if (!data.clientSecret) {
+        console.error('No client secret received');
+        return;
+      }
+
+      // navigate the user to the payment page
+      router.push('/payment');
+
     } catch (error) {
       if (error instanceof z.ZodError) {
         console.error('Validation error:', error.errors);
@@ -104,14 +117,14 @@ export default function Cart() {
                   <div className="flex items-center justify-between mt-2">
                     <div className="flex items-center gap-2">
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity! - 1)}
                         className="text-amber-800 hover:text-amber-600"
                       >
                         -
                       </button>
                       <span>{item.quantity}</span>
                       <button
-                        onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.id, item.quantity! + 1)}
                         className="text-amber-800 hover:text-amber-600"
                       >
                         +
@@ -126,7 +139,7 @@ export default function Cart() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">${(item.price * item.quantity / 100).toFixed(2)}</p>
+                  <p className="font-semibold">${(item.price * item.quantity! / 100).toFixed(2)}</p>
                 </div>
               </div>
             ))}
