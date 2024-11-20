@@ -39,7 +39,9 @@ export const findSimilarDocuments = async (query: string, limit: number = 3): Pr
   const queryEmbedding = await generateEmbedding(query);
 
   // transform embedding to pgvector compatible format
-  const vectorString = arrayToVector(queryEmbedding);
+  const vectorString = await arrayToVector(queryEmbedding);
+
+  console.log("Vector string", vectorString);
 
   const poolResolved = await pool();
 
