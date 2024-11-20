@@ -1,6 +1,7 @@
 "use client";
 
-import { Order, OrderStatus } from '@/types/types';
+import React from 'react';
+import { Order, OrderStatus } from '../types/types';
 import Link from 'next/link';
 
 interface OrdersTableProps {

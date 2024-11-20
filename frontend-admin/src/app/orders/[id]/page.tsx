@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Header from '@/components/Header';
 import { Order, OrderStatus } from '@/types/types';
+import { getOrder, updateOrder } from '../../../../api/apiOrders';
 
 export default function OrderDetailPage() {
   const params = useParams();
@@ -16,12 +17,7 @@ export default function OrderDetailPage() {
 
   const fetchOrder = async () => {
     try {
-      const response = await fetch('http://localhost:3010/order/getOrder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderId: params.id }),
-      });
-      const data = await response.json();
+      const data = await getOrder(params.id as string);
       setOrder(data);
     } catch (error) {
       console.error('Error fetching order:', error);
@@ -31,17 +27,15 @@ export default function OrderDetailPage() {
   };
 
   const handleStatusUpdate = async (newStatus: OrderStatus) => {
+    if (!order) return;
+    
     try {
-      await fetch('http://localhost:3010/order/updateOrder', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderId: order?.id,
-          orderStatus: newStatus,
-          auth0Id: order?.userId,
-          total: order?.total
-        }),
-      });
+      await updateOrder(
+        order.id,
+        order.userId,
+        order.total,
+        newStatus
+      );
       fetchOrder();
     } catch (error) {
       console.error('Error updating order status:', error);

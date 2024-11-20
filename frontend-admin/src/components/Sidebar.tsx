@@ -1,8 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState } from 'react';
+import React from 'react';
 
 interface MenuItem {
   label: string;
