@@ -1,12 +1,12 @@
 // this is a service that uses stripe to create a payment intent
 
-import { stripe } from '../../utils/stripe';
-import type { CreatePaymentIntentDto, PaymentIntentResponse } from '../../types/stripe';
-import Stripe from 'stripe';
+import { stripe } from "../../utils/stripe";
+import type { CreatePaymentIntentDto, PaymentIntentResponse } from "../../types/stripe";
+import Stripe from "stripe";
 
 export const createPaymentIntent = async ({
   amount,
-  currency = 'usd',
+  currency = "usd",
   metadata = {},
   orderId,
 }: CreatePaymentIntentDto): Promise<PaymentIntentResponse> => {
@@ -15,7 +15,7 @@ export const createPaymentIntent = async ({
     currency,
     metadata: {
       ...metadata,
-      orderId: orderId
+      orderId: orderId,
     },
     automatic_payment_methods: {
       enabled: true,
@@ -24,6 +24,6 @@ export const createPaymentIntent = async ({
 
   return {
     clientSecret: paymentIntent.client_secret!,
-    paymentIntentId: paymentIntent.id
+    paymentIntentId: paymentIntent.id,
   };
 };
