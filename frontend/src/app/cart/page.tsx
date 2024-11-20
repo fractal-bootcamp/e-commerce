@@ -2,14 +2,80 @@
 
 import { useCartStore } from '@/app/store/cartStore';
 import Image from 'next/image';
+import { z } from 'zod';
+import { useAuth } from '@/hooks/useAuth';
+
+const createPaymentIntentSchema = z.object({
+  cart: z.object({
+    items: z.array(z.object({
+      id: z.string(),
+      quantity: z.number(),
+      priceInCents: z.number(),
+    })),
+  }),
+  currency: z.string(),
+  metadata: z.record(z.string(), z.string()),
+  orderId: z.string(),
+});
 
 export default function Cart() {
   const { items, total, updateQuantity, removeItem } = useCartStore();
+  const { idToken } = useAuth();
+
+  const handleTestStripeIntegration = async () => {
+    try {
+      // Transform cart items to match schema
+      const cartData = {
+        cart: {
+          items: [
+            {
+              id: "prod_123",
+              quantity: 2,
+              priceInCents: 1999, // $19.99
+            },
+            {
+              id: "prod_456",
+              quantity: 1,
+              priceInCents: 4500, // $45.00
+            }
+          ],
+        },
+        currency: 'usd',
+        metadata: {
+          userId: 'test-user', // Add relevant metadata
+        },
+        orderId: `order-${Date.now()}`, // Generate a temporary order ID
+      };
+
+      // Validate the data against the schema
+      const validatedData = createPaymentIntentSchema.parse(cartData);
+
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/createPaymentIntent`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${idToken}`,
+        },
+        body: JSON.stringify(validatedData),
+      });
+
+      const data = await response.json();
+      console.log('returned data', data);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        console.error('Validation error:', error.errors);
+        // Handle validation error (e.g., show error message to user)
+      } else {
+        console.error('Error creating payment intent:', error);
+        // Handle other errors
+      }
+    }
+  }
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold text-amber-800 mb-8">Your Cart</h1>
-      
+
       {items.length === 0 ? (
         <div className="text-center py-8">
           <p className="text-gray-500">Your cart is empty</p>
@@ -60,7 +126,7 @@ export default function Cart() {
               </div>
             ))}
           </div>
-          
+
           <div className="lg:col-span-1">
             <div className="bg-white p-6 rounded-lg shadow-sm">
               <h2 className="text-xl font-semibold mb-4">Order Summary</h2>
@@ -82,6 +148,9 @@ export default function Cart() {
               </div>
               <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
                 Proceed to Checkout
+              </button>
+              <button onClick={handleTestStripeIntegration} className="w-full bg-amber-500 text-white py-2 mt-8 rounded-full hover:bg-amber-600 transition-colors">
+                Test Stripe Integration
               </button>
             </div>
           </div>
