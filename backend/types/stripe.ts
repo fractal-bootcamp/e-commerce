@@ -1,6 +1,8 @@
+import type { Cart } from "./cart";
+
 // backend/src/types/stripe.ts
 export type CreatePaymentIntentDto = {
-  amount: number;
+  cart: Cart;
   currency?: string;
   metadata?: Record<string, string>;
   orderId: string;
