@@ -3,11 +3,8 @@ import { Pool } from "pg";
 // Generate pool
 export const pool = async () => {
   return new Pool({
-    user: "postgres",
-    password: "postgres",
-    host: "localhost",
-    port: 15432,
-    database: "ragdemo",
+    connectionString: process.env.RAG_DATABASE_URL, // Neon connection string
+    ssl: { rejectUnauthorized: false }, // Required for Neon
   });
 };
 
@@ -16,6 +13,9 @@ export const initializeDatabase = async () => {
   const client = await (await pool()).connect();
   try {
     await client.query("CREATE EXTENSION IF NOT EXISTS vector");
+
+    // Drop existing table
+    await client.query("DROP TABLE IF EXISTS documents");
 
     await client.query(`
       CREATE TABLE IF NOT EXISTS documents (
@@ -26,7 +26,4 @@ export const initializeDatabase = async () => {
   } finally {
     client.release();
   }
-
-  // don't do this in production
-  await client.query("DELETE FROM documents");
 };

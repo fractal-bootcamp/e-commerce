@@ -1,11 +1,11 @@
-import { pool } from "./db";
+import { pool } from "./ragDB";
 import { getOpenaiClient } from "./openaiClient";
 
 // Generate embedding
 export const generateEmbedding = async (text: string): Promise<number[]> => {
   const openai = await getOpenaiClient();
   const response = await openai.embeddings.create({
-    model: "text-embedding-ada-002",
+    model: "text-embedding-3-small",
     input: text,
   });
   console.log(`Generated embedding for ${text}`);
