@@ -4,31 +4,11 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { SearchSection } from './SearchSection';
+import { useCountriesStore } from '../app/store/countriesStore';
 
-const countries = [
-  {
-    name: 'India',
-    flag: '/flags/india.png',
-    description: 'Discover sweet and spicy Indian treats'
-  },
-  {
-    name: 'Peru',
-    flag: '/flags/peru.png',
-    description: 'Explore unique Peruvian delicacies'
-  },
-  {
-    name: 'Sri Lanka',
-    flag: '/flags/sri-lanka.png',
-    description: 'Experience tropical Sri Lankan sweets'
-  },
-  {
-    name: 'Australia',
-    flag: '/flags/australia.png',
-    description: 'Taste authentic Australian snacks'
-  }
-];
 
 export default function CountrySelector() {
+  const { countries } = useCountriesStore();
   const [query, setQuery] = useState('');
   const [filteredCountries, setFilteredCountries] = useState(countries);
 
@@ -58,7 +38,7 @@ export default function CountrySelector() {
               pathname: '/products',
               query: { country: country.name.toLowerCase() },
             }}
-            className="group relative overflow-hidden rounded-lg bg-white shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+            className="group relative overflow-hidden rounded-3xl shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 border-8 border-gray-200 hover:border-amber-200"
           >
             <div className="aspect-square relative">
               <Image
