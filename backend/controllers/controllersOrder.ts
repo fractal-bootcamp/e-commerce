@@ -17,6 +17,13 @@ export const getAllOrders = withLogging(
             price: true,
           },
         },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     });
     res.status(200).json(response);

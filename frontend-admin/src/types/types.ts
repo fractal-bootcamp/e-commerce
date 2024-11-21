@@ -1,14 +1,20 @@
 export enum OrderStatus {
-  PENDING = 'PENDING',
-  PROCESSING = 'PROCESSING',
-  SHIPPED = 'SHIPPED',
-  DELIVERED = 'DELIVERED',
-  CANCELLED = 'CANCELLED'
+  PENDING = "PENDING",
+  PROCESSING = "PROCESSING",
+  SHIPPED = "SHIPPED",
+  DELIVERED = "DELIVERED",
+  CANCELLED = "CANCELLED",
 }
 
 export interface Order {
   id: string;
-  userId: string;
   total: number;
   orderStatus: OrderStatus;
-} 
+  user: User;
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+}
