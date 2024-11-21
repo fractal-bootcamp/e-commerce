@@ -1,41 +1,43 @@
-'use client';
+"use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { SearchSection } from './SearchSection';
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { SearchSection } from "./SearchSection";
 
 const countries = [
   {
-    name: 'India',
-    flag: '/flags/india.png',
-    description: 'Discover sweet and spicy Indian treats'
+    name: "India",
+    flag: "/flags/india.png",
+    description: "Discover sweet and spicy Indian treats",
   },
   {
-    name: 'Peru',
-    flag: '/flags/peru.png',
-    description: 'Explore unique Peruvian delicacies'
+    name: "Peru",
+    flag: "/flags/peru.png",
+    description: "Explore unique Peruvian delicacies",
   },
   {
-    name: 'Sri Lanka',
-    flag: '/flags/sri-lanka.png',
-    description: 'Experience tropical Sri Lankan sweets'
+    name: "Sri_Lanka",
+    flag: "/flags/sri-lanka.png",
+    description: "Experience tropical Sri Lankan sweets",
   },
   {
-    name: 'Australia',
-    flag: '/flags/australia.png',
-    description: 'Taste authentic Australian snacks'
-  }
+    name: "Australia",
+    flag: "/flags/australia.png",
+    description: "Taste authentic Australian snacks",
+  },
 ];
 
 export default function CountrySelector() {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [filteredCountries, setFilteredCountries] = useState(countries);
 
   const handleSearch = () => {
-    const filtered = countries.filter((country) => country.name.toLowerCase().includes(query.toLowerCase()));
+    const filtered = countries.filter((country) =>
+      country.name.toLowerCase().includes(query.toLowerCase())
+    );
     setFilteredCountries(filtered);
-  }
+  };
 
   useEffect(() => {
     if (query) {
@@ -47,7 +49,7 @@ export default function CountrySelector() {
 
   return (
     <div>
-      <div className='flex justify-center'>
+      <div className="flex justify-center">
         <SearchSection query={query} setQuery={setQuery} handleSearch={handleSearch} />
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-12 sm:gap-12 p-12 md:p-16 lg:p-24 max-w-6xl mx-auto">
@@ -55,7 +57,7 @@ export default function CountrySelector() {
           <Link
             key={country.name}
             href={{
-              pathname: '/products',
+              pathname: "/products",
               query: { country: country.name.toLowerCase() },
             }}
             className="group relative overflow-hidden rounded-lg bg-white shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
@@ -77,4 +79,4 @@ export default function CountrySelector() {
       </div>
     </div>
   );
-} 
+}

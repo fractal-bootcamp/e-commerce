@@ -3,6 +3,15 @@ import prisma from "../prisma/client";
 import { withLogging } from "../utils/withLogging";
 import type { CreateProductProps } from "../types/schema";
 
+export const getAllProducts = withLogging(
+  "getAllProducts",
+  false,
+  async (req: Request, res: Response) => {
+    const response = await prisma.product.findMany({});
+    res.status(200).json(response);
+  }
+);
+
 export const getProductsFromCountry = withLogging(
   "getProductsFromCountry",
   false,

@@ -1,19 +1,23 @@
 "use client";
 
-import { useCartStore } from '@/app/store/cartStore';
-import { useStripeStore } from '@/app/store/stripeStore';
-import Image from 'next/image';
-import { z } from 'zod';
-import { useAuth } from '@/hooks/useAuth';
-import { useRouter } from 'next/navigation';
+import { storeCart } from "@/store/storeCart";
+import { useStoreStripe } from "@/store/storeStripe";
+// import Image from "next/image";
+import { z } from "zod";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
+import { addOrder } from "@/api/apiOrder";
+import { OrderStatus } from "@/types/types";
 
 const createPaymentIntentSchema = z.object({
   cart: z.object({
-    items: z.array(z.object({
-      id: z.string(),
-      quantity: z.number(),
-      priceInCents: z.number(),
-    })),
+    items: z.array(
+      z.object({
+        id: z.string(),
+        quantity: z.number(),
+        priceInCents: z.number(),
+      })
+    ),
   }),
   currency: z.string(),
   metadata: z.record(z.string(), z.string()),
@@ -22,73 +26,64 @@ const createPaymentIntentSchema = z.object({
 
 export default function Cart() {
   const router = useRouter();
-  const { items, total, updateQuantity, removeItem } = useCartStore();
-  const { setClientSecret, setPaymentIntentId } = useStripeStore();
-  const { idToken } = useAuth();
+  const { items, total, updateQuantity, removeItem } = storeCart();
+  const { setClientSecret, setPaymentIntentId } = useStoreStripe();
+  const { idToken, firebaseUser } = useAuth();
 
   const handleTestStripeIntegration = async () => {
     try {
-      // Transform cart items to match schema
-      const cartData = {
-        cart: {
-          items: [
-            {
-              id: "prod_123",
-              quantity: 2,
-              priceInCents: 1999, // $19.99
-            },
-            {
-              id: "prod_456",
-              quantity: 1,
-              priceInCents: 4500, // $45.00
-            }
-          ],
-        },
-        currency: 'usd',
-        metadata: {
-          userId: 'test-user', // Add relevant metadata
-        },
-        orderId: `order-${Date.now()}`, // Generate a temporary order ID
-      };
-
       // Validate the data against the schema
-      const validatedData = createPaymentIntentSchema.parse(cartData);
+      const validatedData = createPaymentIntentSchema.parse(items);
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/createPaymentIntent`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`,
-        },
-        body: JSON.stringify(validatedData),
-      });
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/createPaymentIntent`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${idToken}`,
+          },
+          body: JSON.stringify(validatedData),
+        }
+      );
 
       const data = await response.json();
-      // store payment options in global state  
+      // store payment options in global state
       setClientSecret(data.clientSecret);
-      console.log('client secret', data.clientSecret);
-      // store payment intent id in global state  
+      console.log("client secret", data.clientSecret);
+      // store payment intent id in global state
       setPaymentIntentId(data.paymentIntentId);
-      console.log('payment intent id', data.paymentIntentId);
+      console.log("payment intent id", data.paymentIntentId);
 
       if (!data.clientSecret) {
-        console.error('No client secret received');
+        console.error("No client secret received");
         return;
       }
 
       // navigate the user to the payment page
-      router.push('/payment');
-
+      router.push("/payment");
     } catch (error) {
       if (error instanceof z.ZodError) {
-        console.error('Validation error:', error.errors);
+        console.error("Validation error:", error.errors);
         // Handle validation error (e.g., show error message to user)
       } else {
-        console.error('Error creating payment intent:', error);
+        console.error("Error creating payment intent:", error);
         // Handle other errors
       }
     }
-  }
+  };
+
+  const handleCreateOrder = async () => {
+    if (firebaseUser) {
+      const res = await addOrder(
+        firebaseUser.uid,
+        total,
+        OrderStatus.PENDING,
+        items.map((item) => item.id)
+      );
+      console.log(res);
+    }
+  };
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -104,12 +99,12 @@ export default function Cart() {
             {items.map((item) => (
               <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div className="relative w-24 h-24">
-                  <Image
-                    src={item.imageUrl}
+                  {/* <Image
+                    // src={item.imageUrl}
                     alt={item.name}
                     fill
                     className="object-cover rounded-md"
-                  />
+                  /> */}
                 </div>
                 <div className="flex-grow">
                   <h3 className="font-semibold text-lg">{item.name}</h3>
@@ -139,7 +134,9 @@ export default function Cart() {
                   </div>
                 </div>
                 <div className="text-right">
-                  <p className="font-semibold">${(item.price * item.quantity! / 100).toFixed(2)}</p>
+                  <p className="font-semibold">
+                    ${((item.price * item.quantity!) / 100).toFixed(2)}
+                  </p>
                 </div>
               </div>
             ))}
@@ -164,12 +161,23 @@ export default function Cart() {
                   </div>
                 </div>
               </div>
-              <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
-                Proceed to Checkout
-              </button>
-              <button onClick={handleTestStripeIntegration} className="w-full bg-amber-500 text-white py-2 mt-8 rounded-full hover:bg-amber-600 transition-colors">
-                Test Stripe Integration
-              </button>
+              <div className="flex flex-col space-y-2">
+                <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
+                  Proceed to Checkout
+                </button>
+                <button
+                  onClick={handleCreateOrder}
+                  className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors"
+                >
+                  Create order
+                </button>
+                <button
+                  onClick={handleTestStripeIntegration}
+                  className="w-full bg-amber-500 text-white py-2 mt-8 rounded-full hover:bg-amber-600 transition-colors"
+                >
+                  Test Stripe Integration
+                </button>
+              </div>
             </div>
           </div>
         </div>
