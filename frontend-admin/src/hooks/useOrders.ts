@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "./useAuth";
 import { storeOrders } from "@/store/storeOrders";
-import { deleteOrder, getAllOrders, updateOrder } from "@/api/apiOrders";
-import { OrderStatus } from "@/types/types";
+import { deleteOrder, getAllOrders, getOrder, updateOrder } from "@/api/apiOrders";
+import { Order, OrderStatus } from "@/types/types";
 
-export const useOrders = () => {
+export const useOrders = (orderId: string) => {
   // State
-  const { orders, loadOrders } = storeOrders();
+  const { orders, loadOrders, currentOrder, setCurrentOrder } = storeOrders();
   const { idToken, firebaseUser } = useAuth();
   const [filters, setFilters] = useState({
     status: "",
@@ -14,7 +14,7 @@ export const useOrders = () => {
     dateTo: "",
   });
 
-  // Fucntions
+  // Multiple orders
   useEffect(() => {
     fetchOrders();
   }, [idToken, firebaseUser]);
@@ -26,20 +26,29 @@ export const useOrders = () => {
     }
   };
 
-  const handleStatusUpdate = async (orderId: string, newStatus: OrderStatus) => {
-    const order = orders.find((o) => o.id === orderId);
-    if (!order) return;
+  // Single order
+  useEffect(() => {
+    fetchOrder();
+  }, [idToken, firebaseUser]);
 
-    await updateOrder(orderId, order.user.id, order.total, newStatus);
+  const fetchOrder = async () => {
+    if (idToken && firebaseUser) {
+      const response = await getOrder(orderId);
+      setCurrentOrder(response);
+    }
+  };
+
+  // Functions
+  const handleStatusUpdate = async (order: Order, newStatus: OrderStatus) => {
+    await updateOrder(order.id, order.user.id, order.total, newStatus);
     fetchOrders();
   };
 
   const handleDelete = async (orderId: string) => {
     if (!confirm("Are you sure you want to delete this order?")) return;
-
     await deleteOrder(orderId);
     fetchOrders();
   };
 
-  return { orders, filters, setFilters, handleStatusUpdate, handleDelete };
+  return { orders, filters, setFilters, handleStatusUpdate, handleDelete, currentOrder };
 };

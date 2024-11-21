@@ -6,7 +6,7 @@ import OrderFilters from "@/components/OrderFilters";
 import { useOrders } from "@/hooks/useOrders";
 
 const Page = () => {
-  const { orders, filters, setFilters, handleStatusUpdate, handleDelete } = useOrders();
+  const { orders, filters, setFilters, handleStatusUpdate, handleDelete } = useOrders("");
 
   return (
     <div className="p-6">

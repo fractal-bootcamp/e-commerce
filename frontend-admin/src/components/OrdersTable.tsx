@@ -6,7 +6,7 @@ import Link from "next/link";
 
 interface OrdersTableProps {
   orders: Order[];
-  onStatusChange: (orderId: string, status: OrderStatus) => void;
+  onStatusChange: (order: Order, newStatus: OrderStatus) => void;
   onDelete: (orderId: string) => void;
 }
 
@@ -46,7 +46,7 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders, onStatusChange, onDel
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
                   value={order.orderStatus}
-                  onChange={(e) => onStatusChange(order.id, e.target.value as OrderStatus)}
+                  onChange={(e) => onStatusChange(order, e.target.value as OrderStatus)}
                   className="border rounded px-2 py-1"
                 >
                   {Object.values(OrderStatus).map((status) => (
