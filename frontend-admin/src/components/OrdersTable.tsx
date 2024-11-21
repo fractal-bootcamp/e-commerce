@@ -10,7 +10,7 @@ interface OrdersTableProps {
   onDelete: (orderId: string) => void;
 }
 
-export default function OrdersTable({ orders, onStatusChange, onDelete }: OrdersTableProps) {
+const OrdersTable: React.FC<OrdersTableProps> = ({ orders, onStatusChange, onDelete }) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -70,4 +70,6 @@ export default function OrdersTable({ orders, onStatusChange, onDelete }: Orders
       </table>
     </div>
   );
-}
+};
+
+export default OrdersTable;
