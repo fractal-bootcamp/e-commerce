@@ -9,8 +9,13 @@ const Page = () => {
   const params = useParams<{ productId: string }>();
   const { products } = useProducts();
   const product = products.find((product) => product.id === params.productId);
+  console.log(product);
 
-  return <div>{product && <XProduct product={product} />}</div>;
+  return (
+    <div className="p-4">
+      {product && <XProduct product={product} />}
+    </div>
+  );
 };
 
 export default Page;
