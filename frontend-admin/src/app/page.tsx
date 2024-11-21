@@ -1,9 +1,9 @@
-import Header from '@/components/Header';
+import XHeader from "@/components/XHeader";
 
 export default function HomePage() {
   return (
     <div className="p-6">
-      <Header title="Welcome to Snack Safari Admin" />
+      <XHeader title="Welcome to Snack Safari Admin" />
       <div className="bg-white rounded-lg shadow p-6 mt-6">
         <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
         <ul className="space-y-2">

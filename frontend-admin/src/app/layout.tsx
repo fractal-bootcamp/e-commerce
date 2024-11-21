@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Sidebar from "@/components/Sidebar";
+import XSidebar from "@/components/XSidebar";
 
 export const metadata: Metadata = {
   title: "Admin Dashboard",
@@ -16,7 +16,7 @@ export default function RootLayout({
     <html lang="en">
       <body suppressHydrationWarning>
         <div className="flex min-h-screen">
-          <Sidebar />
+          <XSidebar />
           <main className="flex-1 bg-gray-100">{children}</main>
         </div>
       </body>

@@ -1,8 +1,8 @@
 "use client";
 
-import Header from "@/components/Header";
-import OrdersTable from "@/components/OrdersTable";
-import OrderFilters from "@/components/OrderFilters";
+import XHeader from "@/components/XHeader";
+import XOrdersTable from "@/components/XOrdersTable";
+import XOrderFilters from "@/components/XOrderFilters";
 import { useOrders } from "@/hooks/useOrders";
 
 const Page = () => {
@@ -10,9 +10,9 @@ const Page = () => {
 
   return (
     <div className="p-6">
-      <Header title="Orders Management" />
-      <OrderFilters filters={filters} setFilters={setFilters} />
-      <OrdersTable orders={orders} onStatusChange={handleStatusUpdate} onDelete={handleDelete} />
+      <XHeader title="Orders Management" />
+      <XOrderFilters filters={filters} setFilters={setFilters} />
+      <XOrdersTable orders={orders} onStatusChange={handleStatusUpdate} onDelete={handleDelete} />
     </div>
   );
 };

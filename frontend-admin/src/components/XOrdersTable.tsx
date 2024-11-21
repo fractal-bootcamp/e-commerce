@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
 import { Order, OrderStatus } from "../types/types";
 import Link from "next/link";
 
-interface OrdersTableProps {
+interface XOrdersTableProps {
   orders: Order[];
   onStatusChange: (order: Order, newStatus: OrderStatus) => void;
   onDelete: (orderId: string) => void;
 }
 
-const OrdersTable: React.FC<OrdersTableProps> = ({ orders, onStatusChange, onDelete }) => {
+const XOrdersTable = ({ orders, onStatusChange, onDelete }: XOrdersTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -72,4 +71,4 @@ const OrdersTable: React.FC<OrdersTableProps> = ({ orders, onStatusChange, onDel
   );
 };
 
-export default OrdersTable;
+export default XOrdersTable;

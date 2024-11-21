@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import Header from "@/components/Header";
+import XHeader from "@/components/XHeader";
 import { OrderStatus } from "@/types/types";
 import { useOrders } from "@/hooks/useOrders";
 
@@ -13,7 +13,7 @@ export default function OrderDetailPage() {
 
   return (
     <div className="p-6">
-      <Header title={`Order Details - ${currentOrder.id}`} />
+      <XHeader title={`Order Details - ${currentOrder.id}`} />
 
       <div className="bg-white rounded-lg shadow p-6">
         <div className="grid grid-cols-2 gap-4">
