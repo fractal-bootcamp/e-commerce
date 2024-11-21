@@ -8,6 +8,5 @@ interface StoreProductsState {
 
 export const storeProducts = create<StoreProductsState>((set) => ({
   products: [],
-  loadProducts: (newProducts: Product[]) =>
-    set((state) => ({ products: [...state.products, ...newProducts] })),
+  loadProducts: (newProducts: Product[]) => set(() => ({ products: [...newProducts] })),
 }));

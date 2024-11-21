@@ -1,18 +1,22 @@
 import { getAllProducts } from "@/api/apiProduct";
 import { storeProducts } from "@/app/store/storeProducts";
-import { Product } from "@/types/types";
 import { useEffect } from "react";
+import { useAuth } from "./useAuth";
 
 export const useProducts = () => {
   const { products, loadProducts } = storeProducts();
+  const { idToken, firebaseUser } = useAuth();
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const response: Product[] = await getAllProducts();
-      loadProducts(response);
+      if (idToken && firebaseUser) {
+        const response = await getAllProducts();
+        loadProducts(response);
+      }
     };
+
     fetchProducts();
-  }, []);
+  }, [idToken, firebaseUser]);
 
   return { products };
 };
