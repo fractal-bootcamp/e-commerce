@@ -6,6 +6,7 @@ import routesProduct from "./routes/routesProduct";
 import routesOrder from "./routes/routesOrder";
 import routesPayment from "./routes/routesPayment";
 import routesRag from "./routes/routesRag";
+import routesUser from "./routes/routesUser";
 
 export const app = express();
 const cors = require("cors");
@@ -22,6 +23,7 @@ app.use("/product", verifyFirebaseToken, routesProduct);
 app.use("/order", verifyFirebaseToken, routesOrder);
 app.use("/payment", verifyFirebaseToken, routesPayment);
 app.use("/rag", verifyFirebaseToken, routesRag);
+app.use("/user", verifyFirebaseToken, routesUser);
 
 app.listen(PORT, () => {
   console.log(`Server running at http://localhost:${PORT}`);

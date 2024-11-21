@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
 
-export default function Header({ title }: { title: string }) {
+const XHeader = ({ title }: { title: string }) => {
   return (
     <div className="bg-white shadow">
       <div className="px-6 py-4">
@@ -15,4 +15,6 @@ export default function Header({ title }: { title: string }) {
       </div>
     </div>
   );
-} 
+};
+
+export default XHeader;
