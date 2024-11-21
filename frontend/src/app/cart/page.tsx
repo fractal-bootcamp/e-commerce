@@ -147,15 +147,20 @@ export default function Cart() {
                   </div>
                 </div>
               </div>
-              <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
-                Proceed to Checkout
-              </button>
-              <button
-                onClick={handleTestStripeIntegration}
-                className="w-full bg-amber-500 text-white py-2 mt-8 rounded-full hover:bg-amber-600 transition-colors"
-              >
-                Test Stripe Integration
-              </button>
+              <div className="flex flex-col space-y-2">
+                <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
+                  Proceed to Checkout
+                </button>
+                <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
+                  Create order
+                </button>
+                <button
+                  onClick={handleTestStripeIntegration}
+                  className="w-full bg-amber-500 text-white py-2 mt-8 rounded-full hover:bg-amber-600 transition-colors"
+                >
+                  Test Stripe Integration
+                </button>
+              </div>
             </div>
           </div>
         </div>
