@@ -2,7 +2,6 @@ import { OrderStatus } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const getAllOrders = async () => {
-  console.log("started");
   const res = await axiosClient({
     method: "POST",
     url: `/order/getAllOrders`,
