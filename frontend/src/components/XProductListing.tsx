@@ -3,6 +3,7 @@
 // import Image from "next/image";
 import { ProductListProps } from "@/types/types";
 import { useProducts } from "@/hooks/useProducts";
+import Link from "next/link";
 
 const XProductListing = ({ country }: ProductListProps) => {
   const { products } = useProducts();
@@ -16,8 +17,9 @@ const XProductListing = ({ country }: ProductListProps) => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {countryProducts.map((product, key) => (
-          <div
+          <Link
             key={key}
+            href={`/products/${product.id}`}
             className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
             <div className="p-4">
@@ -28,7 +30,7 @@ const XProductListing = ({ country }: ProductListProps) => {
                 <span className="text-sm text-gray-500">{product.inventory_count} in stock</span>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>
