@@ -39,7 +39,7 @@ export default function CountrySelector() {
               pathname: "/products",
               query: { country: country.name.toLowerCase() },
             }}
-            className="group relative overflow-hidden rounded-lg bg-white shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5"
+            className="group relative overflow-hidden rounded-3xl bg-white shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 border-8 border-gray-200 hover:border-amber-200"
           >
             <div className="aspect-square relative">
               <Image
