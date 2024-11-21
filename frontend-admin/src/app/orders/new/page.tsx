@@ -20,9 +20,16 @@ export default function NewOrderPage() {
     productIds: [] as string[],
   });
 
+  console.log(formData);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const response = await addOrder(formData.auth0Id, formData.total, formData.orderStatus);
+    const response = await addOrder(
+      formData.auth0Id,
+      formData.total,
+      formData.orderStatus,
+      formData.productIds
+    );
     console.log(response);
     router.push("/orders");
   };
