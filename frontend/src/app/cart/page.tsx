@@ -6,6 +6,8 @@ import { useStoreStripe } from "@/app/store/storeStripe";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
+import { addOrder } from "@/api/apiOrder";
+import { OrderStatus } from "@/types/types";
 
 const createPaymentIntentSchema = z.object({
   cart: z.object({
@@ -26,7 +28,7 @@ export default function Cart() {
   const router = useRouter();
   const { items, total, updateQuantity, removeItem } = storeCart();
   const { setClientSecret, setPaymentIntentId } = useStoreStripe();
-  const { idToken } = useAuth();
+  const { idToken, firebaseUser } = useAuth();
 
   const handleTestStripeIntegration = async () => {
     try {
@@ -68,6 +70,18 @@ export default function Cart() {
         console.error("Error creating payment intent:", error);
         // Handle other errors
       }
+    }
+  };
+
+  const handleCreateOrder = async () => {
+    if (firebaseUser) {
+      const res = await addOrder(
+        firebaseUser.uid,
+        total,
+        OrderStatus.PENDING,
+        items.map((item) => item.id)
+      );
+      console.log(res);
     }
   };
 
@@ -151,7 +165,10 @@ export default function Cart() {
                 <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
                   Proceed to Checkout
                 </button>
-                <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
+                <button
+                  onClick={handleCreateOrder}
+                  className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors"
+                >
                   Create order
                 </button>
                 <button

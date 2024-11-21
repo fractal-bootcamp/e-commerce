@@ -45,13 +45,16 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
 
 // Add order
 export const addOrder = withLogging("addOrder", false, async (req: Request, res: Response) => {
-  const { auth0Id, total, orderStatus } = req.body;
+  const { auth0Id, total, orderStatus, productIds } = req.body;
   const orderStatusTyped: OrderStatus = orderStatus;
   const response = await prisma.order.create({
     data: {
       userId: auth0Id,
       total: total,
       orderStatus: orderStatusTyped,
+      products: {
+        connect: productIds.map((id: string) => ({ id })),
+      },
     },
   });
   res.status(200).json(response);
