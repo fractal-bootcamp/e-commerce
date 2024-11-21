@@ -3,9 +3,13 @@
 import XCountrySelector from "@/components/XCountrySelector";
 import XAIChat from "@/components/XAIChat";
 import { useAuth } from "@/hooks/useAuth";
+import { enumToArray } from "@/utils/enumToArray";
+import { Country } from "@/types/types";
 
-export default function Home() {
+const Page = () => {
   const { idToken, firebaseUser } = useAuth();
+  const countries = enumToArray(Country);
+
   console.log(idToken);
   console.log(firebaseUser);
 
@@ -24,7 +28,9 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <XCountrySelector />
+      <XCountrySelector countries={countries} />
     </div>
   );
-}
+};
+
+export default Page;

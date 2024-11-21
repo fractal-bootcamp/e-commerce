@@ -1,26 +1,9 @@
 "use client";
 
-import { ragQuery } from "@/api/apiRag";
-import React, { useState } from "react";
+import useRag from "@/hooks/useRag";
 
 const XAIChat = () => {
-  const [query, setQuery] = useState<string>("");
-  const [messages, setMessages] = useState<string[]>([]);
-  const [error, setError] = useState<boolean>(false);
-
-  const handleSubmitQuery = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query !== "") {
-      setMessages((prev) => [...prev, query]);
-      setQuery("");
-      const queryResponse: string[] = await ragQuery(query);
-      setMessages((prev) => [...prev, ...queryResponse]);
-      console.log(queryResponse);
-      setError(false);
-    } else {
-      setError(true);
-    }
-  };
+  const { messages, query, setQuery, handleSubmitQuery, error } = useRag();
 
   return (
     <div className="border-2 border-black">

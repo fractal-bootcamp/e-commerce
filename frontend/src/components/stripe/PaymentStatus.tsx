@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useStripe } from "@stripe/react-stripe-js";
-import { useStoreStripe } from "@/app/store/storeStripe";
+import { useStoreStripe } from "@/store/storeStripe";
 
 export const PaymentStatus = () => {
   const stripe = useStripe();
