@@ -1,13 +1,13 @@
 export type ProductListProps = {
   country: string;
-}
+};
 
 export type Product = {
   id: string;
   name: string;
   description?: string;
   imageUrl?: string;
-  country?: Country;
+  country: Country;
   category?: string;
   inventory_count: number;
   price: number;
@@ -15,26 +15,26 @@ export type Product = {
   stripeProductId?: string;
   createdAt?: Date;
   updatedAt?: Date;
-}
+};
 
 export type CreateProductProps = {
-  product: Omit<Product, 'id' | 'createdAt' | 'updatedAt' | 'stripePriceId' | 'stripeProductId'>;
-}
+  product: Omit<Product, "id" | "createdAt" | "updatedAt" | "stripePriceId" | "stripeProductId">;
+};
 
 export enum Country {
-  JAPAN = 'JAPAN',
-  SOUTH_KOREA = 'SOUTH_KOREA',
-  THAILAND = 'THAILAND',
-  TAIWAN = 'TAIWAN',
-  CHINA = 'CHINA',
-  INDONESIA = 'INDONESIA',
-  PHILIPPINES = 'PHILIPPINES',
-  MEXICO = 'MEXICO',
-  INDIA = 'INDIA',
-  AUSTRALIA = 'AUSTRALIA',
-  PERU = 'PERU',
-  SPAIN = 'SPAIN',
-  SRI_LANKA = 'SRI_LANKA'
+  JAPAN = "JAPAN",
+  SOUTH_KOREA = "SOUTH_KOREA",
+  THAILAND = "THAILAND",
+  TAIWAN = "TAIWAN",
+  CHINA = "CHINA",
+  INDONESIA = "INDONESIA",
+  PHILIPPINES = "PHILIPPINES",
+  MEXICO = "MEXICO",
+  INDIA = "INDIA",
+  AUSTRALIA = "AUSTRALIA",
+  PERU = "PERU",
+  SPAIN = "SPAIN",
+  SRI_LANKA = "SRI_LANKA",
 }
 
 export type Order = {
@@ -49,13 +49,13 @@ export type Order = {
   stripePaymentIntentId?: string;
   createdAt?: Date;
   updatedAt?: Date;
-}
+};
 
 export enum OrderStatus {
-  PENDING = 'PENDING',
-  PAID = 'PAID',
-  SHIPPED = 'SHIPPED',
-  DELIVERED = 'DELIVERED',
-  CANCELLED = 'CANCELLED',
-  REFUNDED = 'REFUNDED'
+  PENDING = "PENDING",
+  PAID = "PAID",
+  SHIPPED = "SHIPPED",
+  DELIVERED = "DELIVERED",
+  CANCELLED = "CANCELLED",
+  REFUNDED = "REFUNDED",
 }

@@ -1,9 +1,8 @@
 "use client";
 
-import CountrySelector from "@/components/CountrySelector";
+import XCountrySelector from "@/components/XCountrySelector";
 import XAIChat from "@/components/XAIChat";
 import { useAuth } from "@/hooks/useAuth";
-// import Image from "next/image";
 
 export default function Home() {
   const { idToken, firebaseUser } = useAuth();
@@ -25,7 +24,7 @@ export default function Home() {
           </div>
         </div>
       </main>
-      <CountrySelector />
+      <XCountrySelector />
     </div>
   );
 }
