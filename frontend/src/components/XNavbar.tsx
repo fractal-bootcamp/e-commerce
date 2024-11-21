@@ -22,7 +22,7 @@ export default function XNavbar() {
                 height={40}
                 className="transform hover:rotate-12 transition-transform"
               />
-              <span className="text-xl sm:text-2xl font-bold text-amber-800 font-['Comic_Sans_MS']">
+              <span className="text-xl sm:text-2xl font-bold text-amber-800">
                 Snack Safari
               </span>
             </Link>
