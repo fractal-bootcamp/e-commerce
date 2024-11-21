@@ -1,12 +1,12 @@
 import { Product } from "@/types/types";
 import { create } from "zustand";
 
-interface StoreProductState {
+interface StoreProductsState {
   products: Product[];
   loadProducts: (newProducts: Product[]) => void;
 }
 
-export const storeProduct = create<StoreProductState>((set) => ({
+export const storeProducts = create<StoreProductsState>((set) => ({
   products: [],
   loadProducts: (newProducts: Product[]) =>
     set((state) => ({ products: [...state.products, ...newProducts] })),
