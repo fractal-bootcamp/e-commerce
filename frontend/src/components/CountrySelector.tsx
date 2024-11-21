@@ -4,31 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { SearchSection } from "./SearchSection";
-
-const countries = [
-  {
-    name: "India",
-    flag: "/flags/india.png",
-    description: "Discover sweet and spicy Indian treats",
-  },
-  {
-    name: "Peru",
-    flag: "/flags/peru.png",
-    description: "Explore unique Peruvian delicacies",
-  },
-  {
-    name: "Sri_Lanka",
-    flag: "/flags/sri-lanka.png",
-    description: "Experience tropical Sri Lankan sweets",
-  },
-  {
-    name: "Australia",
-    flag: "/flags/australia.png",
-    description: "Taste authentic Australian snacks",
-  },
-];
+import { useCountriesStore } from "@/store/storeCountries";
 
 export default function CountrySelector() {
+  const { countries } = useCountriesStore();
   const [query, setQuery] = useState("");
   const [filteredCountries, setFilteredCountries] = useState(countries);
 
