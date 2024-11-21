@@ -4,11 +4,22 @@ import localFont from "next/font/local";
 import XNavbar from "@/components/XNavbar";
 import "./globals.css";
 import { AuthProvider } from "@/components/XAuthProvider";
+import { Lobster, Open_Sans } from 'next/font/google';
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
   variable: "--font-geist-sans",
   weight: "100 900",
+});
+
+export const lobster = Lobster({
+  weight: '400',
+  subsets: ['latin'],
+});
+
+export const openSans = Open_Sans({
+  subsets: ['latin'],
+  weight: ['400', '600'],
 });
 
 export default function RootLayout({
@@ -19,9 +30,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body suppressHydrationWarning className={`${geistSans.variable} antialiased`}>
+        <body suppressHydrationWarning className={`${geistSans.variable} antialiased ${lobster.className}`}>
           <XNavbar />
-          <div className="bg-amber-50 min-h-screen">
+          <div className="bg-neutral-50 min-h-screen">
             {children}
           </div>
         </body>
