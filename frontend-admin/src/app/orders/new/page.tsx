@@ -4,8 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import XHeader from "@/components/XHeader";
 import { OrderStatus } from "@/types/types";
+import { addOrder } from "@/api/apiOrders";
+import useUsers from "@/hooks/useUsers";
+import useProducts from "@/hooks/useProducts";
 
 export default function NewOrderPage() {
+  const { users } = useUsers();
+  const { products } = useProducts();
+
   const router = useRouter();
   const [formData, setFormData] = useState({
     auth0Id: "",
@@ -16,26 +22,9 @@ export default function NewOrderPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    try {
-      const response = await fetch("http://localhost:3010/order/addOrder", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          auth0Id: formData.auth0Id,
-          total: parseFloat(formData.total) * 100,
-          orderStatus: OrderStatus.PENDING,
-        }),
-      });
-
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to create order");
-      }
-
-      router.push("/orders");
-    } catch (error) {
-      console.error("Error creating order:", error);
-    }
+    const response = await addOrder(formData.auth0Id, formData.total, formData.orderStatus);
+    console.log(response);
+    router.push("/orders");
   };
 
   return (
@@ -44,17 +33,22 @@ export default function NewOrderPage() {
 
       <form onSubmit={handleSubmit} className="max-w-2xl bg-white rounded-lg shadow p-6">
         <div className="space-y-4">
+          {/* User id */}
           <div>
             <label className="block text-sm font-medium text-gray-700">User ID</label>
-            <input
-              type="text"
+            <select
               value={formData.auth0Id}
               onChange={(e) => setFormData({ ...formData, auth0Id: e.target.value })}
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              required
-            />
+            >
+              {users.map((user, key) => (
+                <option key={key} value={user.id}>
+                  {user.email}
+                </option>
+              ))}
+            </select>
           </div>
 
+          {/* Total amount */}
           <div>
             <label className="block text-sm font-medium text-gray-700">
               Total Amount (in cents)
@@ -68,6 +62,7 @@ export default function NewOrderPage() {
             />
           </div>
 
+          {/* Order status */}
           <div>
             <label className="block text-sm font-medium text-gray-700">Status</label>
             <select
@@ -85,22 +80,35 @@ export default function NewOrderPage() {
             </select>
           </div>
 
-          <div>
+          {/* Product ids */}
+          <div className="flex flex-col space-y-2">
             <label className="block text-sm font-medium text-gray-700">
               Product IDs (comma-separated)
             </label>
-            <input
-              type="text"
-              value={formData.productIds.join(",")}
+            <select
+              value={formData.auth0Id}
               onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  productIds: e.target.value.split(",").map((id) => id.trim()),
-                })
+                setFormData({ ...formData, productIds: [...formData.productIds, e.target.value] })
               }
-              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
-              placeholder="product-id-1, product-id-2, ..."
-            />
+              className="border-2 border-indigo-500 p-2"
+            >
+              {products.map((product, key) => (
+                <option key={key} value={product.id}>
+                  {product.name}
+                </option>
+              ))}
+            </select>
+
+            <div>
+              <div className="text-gray-700 text-sm">Products Selected</div>
+              <div>
+                {formData.productIds.map((id, key) => (
+                  <p key={key} className="font-thin">
+                    {id}
+                  </p>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
 
