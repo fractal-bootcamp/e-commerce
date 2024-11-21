@@ -23,7 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <AuthProvider>
-        <body suppressHydrationWarning className={`antialiased`}>
+        <body suppressHydrationWarning className={`${geistSans.variable} antialiased ${openSans.className}`}>
           <XNavbar />
           <div className="bg-[#f4f5ef] min-h-screen">{children}</div>
         </body>

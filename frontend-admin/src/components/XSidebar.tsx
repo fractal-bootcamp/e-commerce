@@ -13,7 +13,7 @@ interface MenuItem {
   submenu?: MenuItem[];
 }
 
-export default function Sidebar() {
+const XSidebar = () => {
   const [expandedMenu, setExpandedMenu] = useState<string | null>("Orders");
 
   const menuItems: MenuItem[] = [
@@ -76,4 +76,6 @@ export default function Sidebar() {
       </nav>
     </div>
   );
-}
+};
+
+export default XSidebar;
