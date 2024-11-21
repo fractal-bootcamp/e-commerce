@@ -82,6 +82,7 @@ const XProductListing = ({ country, products }: XProductListingProps) => {
                     onClick={(e) => {
                       e.preventDefault();
                       // TODO: Add to cart logic here using selectedQuantities[product.id]
+                      // TODO: onClick add to cart logic + create toast notification and change cart count in navbar
                       console.log(`Adding ${selectedQuantities[product.id]} of ${product.id} to cart`);
                     }}
                     className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-md transition-colors duration-200 shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed"
