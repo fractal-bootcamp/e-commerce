@@ -1,14 +1,13 @@
 "use client";
 
-import XCountrySelector from "@/components/XCountrySelector";
-import XAIChat from "@/components/XAIChat";
+// import XAIChat from "@/components/XAIChat";
 import { useAuth } from "@/hooks/useAuth";
-import { enumToArray } from "@/utils/enumToArray";
-import { Country } from "@/types/types";
+// import Image from "next/image";
+import { lobster, openSans } from "../app/layout";
+import CountrySelector from "@/components/CountrySelector";
 
 const Page = () => {
   const { idToken, firebaseUser } = useAuth();
-  const countries = enumToArray(Country);
 
   console.log(idToken);
   console.log(firebaseUser);
@@ -18,17 +17,22 @@ const Page = () => {
       <main>
         <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
           <div className="text-center mb-8 sm:mb-12">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-amber-800 mb-3 sm:mb-4">
+            <h1
+              className={`text-4xl sm:text-5xl md:text-6xl text-amber-800 mb-8 ${lobster.className}`}
+            >
               Welcome to Snack Safari
             </h1>
-            <p className="text-base sm:text-lg text-amber-700">
-              Embark on a global adventure of flavors! Choose your destination below.
+            <p className={`text-lg sm:text-xl text-amber-700 mb-4 ${openSans.className}`}>
+              Embark on a global adventure of flavors!
             </p>
-            <XAIChat />
+            <p className="text-lg sm:text-xl text-amber-700 mb-4 font-['Open_Sans']">
+              Pick a country and we&apos;ll find you a great snack!
+            </p>
+            {/* <XAIChat /> */}
           </div>
         </div>
       </main>
-      <XCountrySelector countries={countries} />
+      <CountrySelector />
     </div>
   );
 };
