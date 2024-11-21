@@ -17,6 +17,13 @@ export const getAllOrders = withLogging(
             price: true,
           },
         },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     });
     res.status(200).json(response);
@@ -36,6 +43,13 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
           id: true,
           name: true,
           price: true,
+        },
+      },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
         },
       },
     },

@@ -16,6 +16,8 @@ export default function OrdersPage() {
     dateTo: "",
   });
 
+  console.log(loading);
+
   useEffect(() => {
     fetchOrders();
   }, [filters]);
@@ -38,7 +40,7 @@ export default function OrdersPage() {
       const order = orders.find((o) => o.id === orderId);
       if (!order) return;
 
-      await updateOrder(orderId, order.userId, order.total, newStatus);
+      await updateOrder(orderId, order.user.id, order.total, newStatus);
       fetchOrders();
     } catch (error) {
       console.error("Error updating order status:", error);
