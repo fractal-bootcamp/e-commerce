@@ -30,7 +30,7 @@ export default function OrderDetailPage() {
     if (!order) return;
 
     try {
-      await updateOrder(order.id, order.userId, order.total, newStatus);
+      await updateOrder(order.id, order.user.id, order.total, newStatus);
       fetchOrder();
     } catch (error) {
       console.error("Error updating order status:", error);
@@ -52,7 +52,16 @@ export default function OrderDetailPage() {
               <strong>Order ID:</strong> {order.id}
             </p>
             <p>
-              <strong>User ID:</strong> {order.userId}
+              <strong>Stripe Payment Intent ID:</strong> {order.stripePaymentIntentId}
+            </p>
+            <p>
+              <strong>User ID:</strong> {order.user.id}
+            </p>
+            <p>
+              <strong>User Name:</strong> {order.user.name}
+            </p>
+            <p>
+              <strong>User Email:</strong> {order.user.email}
             </p>
             <p>
               <strong>Total:</strong> ${(order.total / 100).toFixed(2)}
@@ -79,8 +88,8 @@ export default function OrderDetailPage() {
 
           <div>
             <h3 className="text-lg font-semibold mb-2">Products</h3>
-            {order.products?.map((product) => (
-              <div key={product.id} className="mb-2 p-2 border rounded">
+            {order.products.map((product, key) => (
+              <div key={key} className="mb-2 p-2 border rounded">
                 <p>
                   <strong>{product.name}</strong>
                 </p>

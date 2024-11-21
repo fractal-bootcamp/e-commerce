@@ -45,6 +45,13 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
           price: true,
         },
       },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
     },
   });
   res.status(200).json(response);
