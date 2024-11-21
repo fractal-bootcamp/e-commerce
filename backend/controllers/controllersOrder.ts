@@ -17,6 +17,13 @@ export const getAllOrders = withLogging(
             price: true,
           },
         },
+        user: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+          },
+        },
       },
     });
     res.status(200).json(response);
@@ -38,6 +45,13 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
           price: true,
         },
       },
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+        },
+      },
     },
   });
   res.status(200).json(response);
@@ -45,13 +59,25 @@ export const getOrder = withLogging("getOrder", false, async (req: Request, res:
 
 // Add order
 export const addOrder = withLogging("addOrder", false, async (req: Request, res: Response) => {
-  const { auth0Id, total, orderStatus } = req.body;
+  const { auth0Id, total, orderStatus, productIds } = req.body;
+  // Check if the user exists
+  const userExists = await prisma.user.findUnique({
+    where: { auth0Id: auth0Id },
+  });
+
+  if (!userExists) {
+    return res.status(404).json({ error: "User not found" });
+  }
+
   const orderStatusTyped: OrderStatus = orderStatus;
   const response = await prisma.order.create({
     data: {
       userId: auth0Id,
       total: total,
       orderStatus: orderStatusTyped,
+      products: {
+        connect: productIds.map((id: string) => ({ id })),
+      },
     },
   });
   res.status(200).json(response);

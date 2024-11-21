@@ -1,17 +1,22 @@
-import ProductList from '@/components/ProductListing';
+"use client";
 
+import XProductListing from "@/components/XProductListing";
+import { useProducts } from "@/hooks/useProducts";
+import { useSearchParams } from "next/navigation";
 
-export default async function DisplayProducts({
-  searchParams,
-}: {
-  searchParams: { country?: string };
-}) {
-  const country = searchParams.country || 'India';
-  console.log('country in search params', country);
+const Page = () => {
+  const searchParams = useSearchParams();
+  const country = searchParams.get("country") || "India";
+  const { products } = useProducts();
+
+  const countryProducts =
+    products?.filter((product) => product.country.toLowerCase() === country.toLowerCase()) || [];
 
   return (
     <div className="container mx-auto">
-      <ProductList country={country} />
+      <XProductListing country={country} products={countryProducts} />
     </div>
   );
-}
+};
+
+export default Page;

@@ -1,26 +1,35 @@
 "use client";
 
-import React from 'react';
-import { Order, OrderStatus } from '../types/types';
-import Link from 'next/link';
+import { Order, OrderStatus } from "../types/types";
+import Link from "next/link";
 
-interface OrdersTableProps {
+interface XOrdersTableProps {
   orders: Order[];
-  onStatusChange: (orderId: string, status: OrderStatus) => void;
+  onStatusChange: (order: Order, newStatus: OrderStatus) => void;
   onDelete: (orderId: string) => void;
 }
 
-export default function OrdersTable({ orders, onStatusChange, onDelete }: OrdersTableProps) {
+const XOrdersTable = ({ orders, onStatusChange, onDelete }: XOrdersTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
         <thead>
           <tr className="bg-gray-50 border-b">
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Order ID</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">User</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Total</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
-            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              Order ID
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              User
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              Total
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              Status
+            </th>
+            <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">
+              Actions
+            </th>
           </tr>
         </thead>
         <tbody className="divide-y divide-gray-200">
@@ -31,16 +40,18 @@ export default function OrdersTable({ orders, onStatusChange, onDelete }: Orders
                   {order.id}
                 </Link>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">{order.userId}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
               <td className="px-6 py-4 whitespace-nowrap">${(order.total / 100).toFixed(2)}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
                   value={order.orderStatus}
-                  onChange={(e) => onStatusChange(order.id, e.target.value as OrderStatus)}
+                  onChange={(e) => onStatusChange(order, e.target.value as OrderStatus)}
                   className="border rounded px-2 py-1"
                 >
                   {Object.values(OrderStatus).map((status) => (
-                    <option key={status} value={status}>{status}</option>
+                    <option key={status} value={status}>
+                      {status}
+                    </option>
                   ))}
                 </select>
               </td>
@@ -58,4 +69,6 @@ export default function OrdersTable({ orders, onStatusChange, onDelete }: Orders
       </table>
     </div>
   );
-} 
+};
+
+export default XOrdersTable;

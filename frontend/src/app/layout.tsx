@@ -1,25 +1,18 @@
 "use client";
 
-import localFont from "next/font/local";
 import XNavbar from "@/components/XNavbar";
 import "./globals.css";
 import { AuthProvider } from "@/components/XAuthProvider";
-import { Lobster, Open_Sans } from 'next/font/google';
-
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
+import { Lobster, Open_Sans } from "next/font/google";
 
 export const lobster = Lobster({
-  weight: '400',
-  subsets: ['latin'],
+  weight: "400",
+  subsets: ["latin"],
 });
 
 export const openSans = Open_Sans({
-  subsets: ['latin'],
-  weight: ['400', '600'],
+  subsets: ["latin"],
+  weight: ["400", "600"],
 });
 
 export default function RootLayout({
