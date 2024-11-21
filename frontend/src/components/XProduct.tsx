@@ -1,6 +1,6 @@
 "use client";
 
-import { storeCart } from "@/app/store/storeCart";
+import { storeCart } from "@/store/storeCart";
 import { CartProduct } from "@/types/cart";
 import { Product } from "@/types/types";
 import React from "react";

@@ -1,7 +1,7 @@
 "use client";
 
-import { storeCart } from "@/app/store/storeCart";
-import { useStoreStripe } from "@/app/store/storeStripe";
+import { storeCart } from "@/store/storeCart";
+import { useStoreStripe } from "@/store/storeStripe";
 // import Image from "next/image";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";

@@ -1,5 +1,5 @@
 import { getAllProducts } from "@/api/apiProduct";
-import { storeProducts } from "@/app/store/storeProducts";
+import { storeProducts } from "@/store/storeProducts";
 import { useEffect } from "react";
 import { useAuth } from "./useAuth";
 

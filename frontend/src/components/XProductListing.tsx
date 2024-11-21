@@ -1,22 +1,21 @@
 "use client";
 
 // import Image from "next/image";
-import { ProductListProps } from "@/types/types";
-import { useProducts } from "@/hooks/useProducts";
+import { Product } from "@/types/types";
 import Link from "next/link";
 
-const XProductListing = ({ country }: ProductListProps) => {
-  const { products } = useProducts();
+interface XProductListingProps {
+  country: string;
+  products: Product[];
+}
 
-  const countryProducts =
-    products?.filter((product) => product.country.toLowerCase() === country.toLowerCase()) || [];
-
+const XProductListing = ({ country, products }: XProductListingProps) => {
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8">Snacks from {country}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {countryProducts.map((product, key) => (
+        {products.map((product, key) => (
           <Link
             key={key}
             href={`/products/${product.id}`}
