@@ -5,12 +5,13 @@ import Link from "next/link";
 import XLoginButton from "./XLoginButton";
 import { useState } from "react";
 import XLogoutButton from "./XLogoutButton";
+import { lobster } from '../app/layout';
 
 export default function XNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
-    <nav className="top-0 left-0 right-0 z-50 bg-amber-100 border-b-2 border-amber-200">
+    <nav className="top-0 left-0 right-0 z-50 bg-amber-50 border-b-2 border-amber-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -22,7 +23,7 @@ export default function XNavbar() {
                 height={40}
                 className="transform hover:rotate-12 transition-transform"
               />
-              <span className="text-xl sm:text-2xl font-bold text-amber-800">
+              <span className={`text-xl sm:text-2xl font-bold text-amber-800 ${lobster.className}`}>
                 Snack Safari
               </span>
             </Link>
