@@ -1,17 +1,13 @@
-import ProductList from '@/components/ProductListing';
+import XProductListing from "@/components/XProductListing";
 
-
-export default async function DisplayProducts({
-  searchParams,
-}: {
-  searchParams: { country?: string };
-}) {
-  const country = searchParams.country || 'India';
-  console.log('country in search params', country);
+const DisplayProducts = async ({ searchParams }: { searchParams: { country?: string } }) => {
+  const country = searchParams.country || "India";
 
   return (
     <div className="container mx-auto">
-      <ProductList country={country} />
+      <XProductListing country={country} />
     </div>
   );
-}
+};
+
+export default DisplayProducts;
