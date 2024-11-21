@@ -1,9 +1,8 @@
 import { create } from "zustand";
 import { CartProduct, CartStore } from "@/types/cart";
-import { products } from "@/utils/dummyData";
 
 export const storeCart = create<CartStore>((set) => ({
-  items: [products[0], products[1]],
+  items: [],
   total: 0,
 
   addItem: (product) =>
