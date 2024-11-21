@@ -1,15 +1,14 @@
 "use client";
 
-import Image from 'next/image';
-import Link from 'next/link';
-import { useState, useEffect } from 'react';
-import { SearchSection } from './SearchSection';
-import { useCountriesStore } from '../app/store/countriesStore';
-
+import Image from "next/image";
+import Link from "next/link";
+import { useState, useEffect } from "react";
+import { SearchSection } from "./SearchSection";
+import { useCountriesStore } from "@/store/storeCountries";
 
 export default function CountrySelector() {
   const { countries } = useCountriesStore();
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
   const [filteredCountries, setFilteredCountries] = useState(countries);
 
   const handleSearch = () => {
@@ -40,7 +39,7 @@ export default function CountrySelector() {
               pathname: "/products",
               query: { country: country.name.toLowerCase() },
             }}
-            className="group relative overflow-hidden rounded-3xl shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 border-8 border-gray-200 hover:border-amber-200"
+            className="group relative overflow-hidden rounded-3xl bg-white shadow hover:shadow-md transition-all duration-300 transform hover:-translate-y-0.5 border-8 border-gray-200 hover:border-amber-200"
           >
             <div className="aspect-square relative">
               <Image
