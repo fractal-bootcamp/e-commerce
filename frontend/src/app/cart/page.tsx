@@ -2,7 +2,7 @@
 
 import { storeCart } from "@/app/store/storeCart";
 import { useStoreStripe } from "@/app/store/storeStripe";
-import Image from "next/image";
+// import Image from "next/image";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -30,31 +30,8 @@ export default function Cart() {
 
   const handleTestStripeIntegration = async () => {
     try {
-      // Transform cart items to match schema
-      const cartData = {
-        cart: {
-          items: [
-            {
-              id: "prod_123",
-              quantity: 2,
-              priceInCents: 1999, // $19.99
-            },
-            {
-              id: "prod_456",
-              quantity: 1,
-              priceInCents: 4500, // $45.00
-            },
-          ],
-        },
-        currency: "usd",
-        metadata: {
-          userId: "test-user", // Add relevant metadata
-        },
-        orderId: `order-${Date.now()}`, // Generate a temporary order ID
-      };
-
       // Validate the data against the schema
-      const validatedData = createPaymentIntentSchema.parse(cartData);
+      const validatedData = createPaymentIntentSchema.parse(items);
 
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/createPaymentIntent`,
@@ -108,12 +85,12 @@ export default function Cart() {
             {items.map((item) => (
               <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div className="relative w-24 h-24">
-                  <Image
-                    src={item.imageUrl}
+                  {/* <Image
+                    // src={item.imageUrl}
                     alt={item.name}
                     fill
                     className="object-cover rounded-md"
-                  />
+                  /> */}
                 </div>
                 <div className="flex-grow">
                   <h3 className="font-semibold text-lg">{item.name}</h3>
