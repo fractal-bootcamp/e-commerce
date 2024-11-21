@@ -1,68 +1,20 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Header from "@/components/Header";
-import { Order, OrderStatus } from "@/types/types";
-import { getAllOrders, updateOrder, deleteOrder } from "../../api/apiOrders";
-import OrdersTable from "@/components/OrdersTable";
-import OrderFilters from "@/components/OrderFilters";
+import XHeader from "@/components/XHeader";
+import XOrdersTable from "@/components/XOrdersTable";
+import XOrderFilters from "@/components/XOrderFilters";
+import { useOrders } from "@/hooks/useOrders";
 
-export default function OrdersPage() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [filters, setFilters] = useState({
-    status: "",
-    dateFrom: "",
-    dateTo: "",
-  });
-
-  console.log(loading);
-
-  useEffect(() => {
-    fetchOrders();
-  }, [filters]);
-
-  const fetchOrders = async () => {
-    try {
-      setLoading(true);
-      const data = await getAllOrders();
-      setOrders(Array.isArray(data) ? data : []);
-    } catch (error) {
-      console.error("Error fetching orders:", error);
-      setOrders([]);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleStatusUpdate = async (orderId: string, newStatus: OrderStatus) => {
-    try {
-      const order = orders.find((o) => o.id === orderId);
-      if (!order) return;
-
-      await updateOrder(orderId, order.user.id, order.total, newStatus);
-      fetchOrders();
-    } catch (error) {
-      console.error("Error updating order status:", error);
-    }
-  };
-
-  const handleDelete = async (orderId: string) => {
-    if (!confirm("Are you sure you want to delete this order?")) return;
-
-    try {
-      await deleteOrder(orderId);
-      fetchOrders();
-    } catch (error) {
-      console.error("Error deleting order:", error);
-    }
-  };
+const Page = () => {
+  const { orders, filters, setFilters, handleStatusUpdate, handleDelete } = useOrders("");
 
   return (
     <div className="p-6">
-      <Header title="Orders Management" />
-      <OrderFilters filters={filters} setFilters={setFilters} />
-      <OrdersTable orders={orders} onStatusChange={handleStatusUpdate} onDelete={handleDelete} />
+      <XHeader title="Orders Management" />
+      <XOrderFilters filters={filters} setFilters={setFilters} />
+      <XOrdersTable orders={orders} onStatusChange={handleStatusUpdate} onDelete={handleDelete} />
     </div>
   );
-}
+};
+
+export default Page;

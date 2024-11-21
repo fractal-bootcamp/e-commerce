@@ -1,16 +1,15 @@
 "use client";
 
-import React from "react";
 import { Order, OrderStatus } from "../types/types";
 import Link from "next/link";
 
-interface OrdersTableProps {
+interface XOrdersTableProps {
   orders: Order[];
-  onStatusChange: (orderId: string, status: OrderStatus) => void;
+  onStatusChange: (order: Order, newStatus: OrderStatus) => void;
   onDelete: (orderId: string) => void;
 }
 
-export default function OrdersTable({ orders, onStatusChange, onDelete }: OrdersTableProps) {
+const XOrdersTable = ({ orders, onStatusChange, onDelete }: XOrdersTableProps) => {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full bg-white">
@@ -46,7 +45,7 @@ export default function OrdersTable({ orders, onStatusChange, onDelete }: Orders
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
                   value={order.orderStatus}
-                  onChange={(e) => onStatusChange(order.id, e.target.value as OrderStatus)}
+                  onChange={(e) => onStatusChange(order, e.target.value as OrderStatus)}
                   className="border rounded px-2 py-1"
                 >
                   {Object.values(OrderStatus).map((status) => (
@@ -70,4 +69,6 @@ export default function OrdersTable({ orders, onStatusChange, onDelete }: Orders
       </table>
     </div>
   );
-}
+};
+
+export default XOrdersTable;

@@ -1,6 +1,6 @@
-import React from 'react';
+import React from "react";
 
-interface OrderFiltersProps {
+interface XOrderFiltersProps {
   filters: {
     status: string;
     dateFrom: string;
@@ -9,7 +9,7 @@ interface OrderFiltersProps {
   setFilters: (filters: any) => void;
 }
 
-export default function OrderFilters({ filters, setFilters }: OrderFiltersProps) {
+const XOrderFilters = ({ filters, setFilters }: XOrderFiltersProps) => {
   return (
     <div className="mb-6 bg-white p-4 rounded-lg shadow space-y-4">
       <h2 className="text-lg font-semibold mb-4">Filters</h2>
@@ -28,7 +28,7 @@ export default function OrderFilters({ filters, setFilters }: OrderFiltersProps)
             <option value="DELIVERED">Delivered</option>
           </select>
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700">From Date</label>
           <input
@@ -38,7 +38,7 @@ export default function OrderFilters({ filters, setFilters }: OrderFiltersProps)
             className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500"
           />
         </div>
-        
+
         <div>
           <label className="block text-sm font-medium text-gray-700">To Date</label>
           <input
@@ -51,4 +51,6 @@ export default function OrderFilters({ filters, setFilters }: OrderFiltersProps)
       </div>
     </div>
   );
-} 
+};
+
+export default XOrderFilters;

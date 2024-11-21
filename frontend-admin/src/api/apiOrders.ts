@@ -1,3 +1,4 @@
+import { OrderStatus } from "@/types/types";
 import axiosClient from "./axiosClient";
 
 export const getAllOrders = async () => {
@@ -40,7 +41,7 @@ export const updateOrder = async (
   orderId: string,
   auth0Id: string,
   total: number,
-  orderStatus: string
+  orderStatus: OrderStatus
 ) => {
   const res = await axiosClient({
     method: "POST",
