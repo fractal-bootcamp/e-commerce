@@ -25,7 +25,7 @@ export default function RootLayout({
       <AuthProvider>
         <body suppressHydrationWarning className={`antialiased`}>
           <XNavbar />
-          <div className="bg-[#f4f5ef] min-h-screen">{children}</div>
+          <div className="bg-neutral-100 min-h-screen">{children}</div>
         </body>
       </AuthProvider>
     </html>
