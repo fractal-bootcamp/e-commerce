@@ -1,13 +1,12 @@
 "use client";
 
 import XProductListing from "@/components/XProductListing";
+import XProtectedRoute from "@/components/XProtectedRoute";
 import { useProducts } from "@/hooks/useProducts";
-import useProtectedRoute from "@/hooks/useProtectedRoute";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 const ProductContent = () => {
-  useProtectedRoute();
   const searchParams = useSearchParams();
   const country = searchParams.get("country");
   const { products } = useProducts();
@@ -30,11 +29,13 @@ const ProductContent = () => {
 
 const Page = () => {
   return (
-    <div className="container mx-auto">
-      <Suspense fallback={<>Loading...</>}>
-        <ProductContent />
-      </Suspense>
-    </div>
+    <XProtectedRoute>
+      <div className="container mx-auto">
+        <Suspense fallback={<>Loading...</>}>
+          <ProductContent />
+        </Suspense>
+      </div>
+    </XProtectedRoute>
   );
 };
 
