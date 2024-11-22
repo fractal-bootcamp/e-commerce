@@ -6,6 +6,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useStoreStripe } from "@/store/storeStripe";
 import { notFound } from "next/navigation";
+import useProtectedRoute from "@/hooks/useProtectedRoute";
 
 if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
   throw new Error("NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY is not set");
@@ -14,6 +15,7 @@ if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function PaymentPage() {
+  useProtectedRoute();
   const { clientSecret } = useStoreStripe();
 
   if (!clientSecret) {

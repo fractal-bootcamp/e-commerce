@@ -1,13 +1,15 @@
-'use client';
+"use client";
 
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
-import { PaymentStatus } from '@/components/stripe/PaymentStatus';
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+import { PaymentStatus } from "@/components/stripe/PaymentStatus";
+import useProtectedRoute from "@/hooks/useProtectedRoute";
 //import { useStripeStore } from '@/app/store/stripeStore';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function PaymentStatusPage() {
+  useProtectedRoute();
   //const { paymentStatus } = useStripeStore();
 
   return (

@@ -6,12 +6,14 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { addOrder } from "@/api/apiOrder";
 import { OrderStatus } from "@/types/types";
+import useProtectedRoute from "@/hooks/useProtectedRoute";
 import { useStoreStripe } from "@/store/storeStripe";
 import { handleStripeIntegration } from "@/utils/handleStripe";
 export type AppRouterInstance = ReturnType<typeof useRouter>;
 
-
 export default function Cart() {
+  useProtectedRoute();
+  const { items, total, updateQuantity, removeItem } = storeCart();
   const router = useRouter() as AppRouterInstance;
   const { setClientSecret, setPaymentIntentId } = useStoreStripe();
   const { items, total, updateQuantity, removeItem } = storeCart();
@@ -46,7 +48,7 @@ export default function Cart() {
               <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div className="relative w-24 h-24">
                   <Image
-                    src={item.imageUrl || '/placeholder-image.png'}
+                    src={item.imageUrl || "/placeholder-image.png"}
                     alt={item.name}
                     fill
                     className="object-cover rounded-md"

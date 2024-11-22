@@ -48,7 +48,10 @@ export default function CountrySelector() {
                 fill
                 className="object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <div
+                suppressHydrationWarning
+                className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"
+              />
               <div className="absolute bottom-0 left-0 right-0 p-2 sm:p-3 text-white">
                 <h3 className="text-base sm:text-lg font-bold mb-0">{country.name}</h3>
               </div>

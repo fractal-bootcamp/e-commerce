@@ -2,10 +2,12 @@
 
 import XProductListing from "@/components/XProductListing";
 import { useProducts } from "@/hooks/useProducts";
+import useProtectedRoute from "@/hooks/useProtectedRoute";
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 
 const ProductContent = () => {
+  useProtectedRoute();
   const searchParams = useSearchParams();
   const country = searchParams.get("country");
   const { products } = useProducts();
