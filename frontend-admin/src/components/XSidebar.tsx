@@ -5,6 +5,7 @@ import { useState } from "react";
 import React from "react";
 import XLoginButton from "./XLoginButton";
 import XLogoutButton from "./XLogoutButton";
+import { useAuth } from "@/hooks/useAuth";
 
 interface MenuItem {
   label: string;
@@ -14,6 +15,7 @@ interface MenuItem {
 }
 
 const XSidebar = () => {
+  const { firebaseUser, idToken } = useAuth();
   const [expandedMenu, setExpandedMenu] = useState<string | null>("Orders");
 
   const menuItems: MenuItem[] = [
@@ -37,8 +39,7 @@ const XSidebar = () => {
 
       {/* Login/Logout */}
       <div className="flex flex-col space-y-2 p-2">
-        <XLoginButton />
-        <XLogoutButton />
+        {firebaseUser && idToken ? <XLogoutButton /> : <XLoginButton />}
       </div>
 
       {/* Navigation Menu */}

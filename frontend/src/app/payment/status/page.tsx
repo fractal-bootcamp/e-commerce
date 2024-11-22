@@ -3,19 +3,19 @@
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { PaymentStatus } from "@/components/stripe/PaymentStatus";
-import useProtectedRoute from "@/hooks/useProtectedRoute";
+import XProtectedRoute from "@/components/XProtectedRoute";
 //import { useStripeStore } from '@/app/store/stripeStore';
 
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
 
 export default function PaymentStatusPage() {
-  useProtectedRoute();
   //const { paymentStatus } = useStripeStore();
 
   return (
-    <Elements stripe={stripePromise}>
-      <PaymentStatus />
-      {/* <div className="min-h-screen flex items-center justify-center bg-gray-50">
+    <XProtectedRoute>
+      <Elements stripe={stripePromise}>
+        <PaymentStatus />
+        {/* <div className="min-h-screen flex items-center justify-center bg-gray-50">
         {paymentStatus === 'success' && (
           <div className="text-center">
             <h2 className="text-2xl font-bold text-green-600">Payment Successful!</h2>
@@ -44,6 +44,7 @@ export default function PaymentStatusPage() {
           </div>
         )}
       </div> */}
-    </Elements>
+      </Elements>
+    </XProtectedRoute>
   );
 }

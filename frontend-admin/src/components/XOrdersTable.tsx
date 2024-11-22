@@ -40,7 +40,7 @@ const XOrdersTable = ({ orders, onStatusChange, onDelete }: XOrdersTableProps) =
                   {order.id}
                 </Link>
               </td>
-              <td className="px-6 py-4 whitespace-nowrap">{order.user.name}</td>
+              <td className="px-6 py-4 whitespace-nowrap">{order.user.email}</td>
               <td className="px-6 py-4 whitespace-nowrap">${(order.total / 100).toFixed(2)}</td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <select
