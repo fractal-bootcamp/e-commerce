@@ -5,6 +5,7 @@ import Link from "next/link";
 import XLoginButton from "./XLoginButton";
 import { useState } from "react";
 import XLogoutButton from "./XLogoutButton";
+import { lobster } from "@/utils/fonts";
 
 export default function XNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
