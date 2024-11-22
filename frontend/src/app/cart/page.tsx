@@ -6,14 +6,12 @@ import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { addOrder } from "@/api/apiOrder";
 import { OrderStatus } from "@/types/types";
-import useProtectedRoute from "@/hooks/useProtectedRoute";
 import { useStoreStripe } from "@/store/storeStripe";
 import { handleStripeIntegration } from "@/utils/handleStripe";
 import XProtectedRoute from "@/components/XProtectedRoute";
 export type AppRouterInstance = ReturnType<typeof useRouter>;
 
 export default function Cart() {
-  useProtectedRoute();
   const { items, total, updateQuantity, removeItem } = storeCart();
   const router = useRouter() as AppRouterInstance;
   const { setClientSecret, setPaymentIntentId } = useStoreStripe();
