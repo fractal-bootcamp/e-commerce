@@ -2,7 +2,7 @@
 
 import { storeCart } from "@/store/storeCart";
 import { useStoreStripe } from "@/store/storeStripe";
-// import Image from "next/image";
+import Image from "next/image";
 import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
@@ -99,12 +99,12 @@ export default function Cart() {
             {items.map((item) => (
               <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div className="relative w-24 h-24">
-                  {/* <Image
-                    // src={item.imageUrl}
+                  <Image
+                    src={item.imageUrl || '/placeholder-image.png'}
                     alt={item.name}
                     fill
                     className="object-cover rounded-md"
-                  /> */}
+                  />
                 </div>
                 <div className="flex-grow">
                   <h3 className="font-semibold text-lg">{item.name}</h3>

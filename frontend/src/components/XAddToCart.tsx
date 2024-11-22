@@ -1,6 +1,48 @@
+import { storeCart } from "@/store/storeCart";
+import { CartProduct } from "@/types/cart";
 import { Product } from "@/types/types";
+import { useState } from "react";
 
-const AddToCart = ({ product, selectedQuantities, updateQuantity }: { product: Product, selectedQuantities: { [key: string]: number }, updateQuantity: (productId: string, quantity: number) => void }) => {
+const AddToCart = ({ product }: {
+  product: Product,
+}) => {
+
+  const [selectedQuantities, setSelectedQuantities] = useState<{ [key: string]: number }>({});
+  const { items, addItem } = storeCart();
+
+  // if the item already exists, update the quantity
+  const updateQuantity = (productId: string, delta: number) => {
+    setSelectedQuantities(prev => {
+      const currentQty = prev[productId] || 0;
+      const newQty = Math.max(0, Math.min(currentQty + delta, product.inventory_count || 0));
+      return { ...prev, [productId]: newQty };
+    });
+  };
+
+  // if the item already exists, update the quantity
+  // if the item does not exist, add it to the cart
+  const handleAddToCart = () => {
+    const item: CartProduct | undefined = items.find((item) => item.id === product.id);
+    if (item) {
+      addItem(item, selectedQuantities[product.id] || 0);
+    } else {
+      const cartProduct: CartProduct = {
+        id: product.id,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        imageUrl: product.imageUrl,
+        country: product.country,
+        inventory_count: product.inventory_count,
+        quantity: selectedQuantities[product.id] || 0,
+      };
+      addItem(cartProduct, selectedQuantities[product.id] || 0);
+      // Reset the quantity after adding to cart
+      setSelectedQuantities(prev => ({ ...prev, [product.id]: 0 }));
+    }
+    console.log('items', items);
+  };
+
   return (
     <div className="flex items-center gap-2">
       <div className="flex items-center border rounded-md">
@@ -31,9 +73,8 @@ const AddToCart = ({ product, selectedQuantities, updateQuantity }: { product: P
       <button
         onClick={(e) => {
           e.preventDefault();
-          // TODO: Add to cart logic here using selectedQuantities[product.id]
-          // TODO: onClick add to cart logic + create toast notification and change cart count in navbar
-          console.log(`Adding ${selectedQuantities[product.id]} of ${product.id} to cart`);
+          handleAddToCart();
+          console.log(`${product.name} x ${selectedQuantities[product.id]} added to cart`);
         }}
         className="flex items-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold px-4 py-2 rounded-md transition-colors duration-200 shadow-sm hover:shadow disabled:opacity-50 disabled:cursor-not-allowed"
         disabled={!selectedQuantities[product.id]}
