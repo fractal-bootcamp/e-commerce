@@ -1,4 +1,4 @@
-export interface CartProduct {
+export type CartProduct = {
   id: string;
   name: string;
   description?: string;
@@ -10,9 +10,9 @@ export interface CartProduct {
   quantity: number;
 }
 
-export interface CartStore {
+export type CartStore = {
   items: CartProduct[];
-  addItem: (product: CartProduct) => void;
+  addItem: (product: CartProduct, quantity: number) => void;
   removeItem: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
   clearCart: () => void;
