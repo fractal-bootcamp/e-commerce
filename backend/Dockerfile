@@ -7,6 +7,9 @@ WORKDIR /app
 # Copy the package and lock files to the working directory
 COPY ./package.json ./package-lock.json ./
 
+# Install openssl
+RUN apt-get update -y && apt-get install -y openssl
+
 # Install prisma globally
 RUN npm install -g prisma
 
