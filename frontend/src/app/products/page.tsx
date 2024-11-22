@@ -3,21 +3,24 @@
 import XProductListing from "@/components/XProductListing";
 import { useProducts } from "@/hooks/useProducts";
 import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
 
 const Page = () => {
   const searchParams = useSearchParams();
-  const country = searchParams.get("country") || "India";
+  const country = searchParams.get("country");
   const { products } = useProducts();
 
   const countryProducts =
-    products?.filter((product) => product.country.toLowerCase() === country.toLowerCase()) || [];
+    country && products
+      ? products.filter((product) => product.country.toLowerCase() === country.toLowerCase())
+      : null;
 
   return (
     <div className="container mx-auto">
-      <Suspense fallback={<div>Loading...</div>}>
+      {country && countryProducts ? (
         <XProductListing country={country} products={countryProducts} />
-      </Suspense>
+      ) : (
+        <>Loading...</>
+      )}
     </div>
   );
 };
