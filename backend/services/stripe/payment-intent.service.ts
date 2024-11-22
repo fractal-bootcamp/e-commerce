@@ -25,5 +25,7 @@ export const createPaymentIntent = async ({
   return {
     clientSecret: paymentIntent.client_secret!,
     paymentIntentId: paymentIntent.id,
+    amount: amount,
+    currency: currency,
   };
 };

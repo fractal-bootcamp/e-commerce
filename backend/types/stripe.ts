@@ -17,4 +17,6 @@ export type CreatePaymentIntentRequest = {
 export type PaymentIntentResponse = {
   clientSecret: string;
   paymentIntentId: string;
+  amount: number;
+  currency: string;
 } 
