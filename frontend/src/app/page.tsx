@@ -3,7 +3,7 @@
 // import XAIChat from "@/components/XAIChat";
 import { useAuth } from "@/hooks/useAuth";
 // import Image from "next/image";
-import { lobster, openSans } from "../app/layout";
+import { lobster, openSans } from "@/utils/fonts";
 import CountrySelector from "@/components/CountrySelector";
 
 const Page = () => {
