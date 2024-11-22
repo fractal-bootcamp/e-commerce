@@ -15,7 +15,7 @@ const XProductListing = ({ country, products }: XProductListingProps) => {
 
   const countryNameNormalised = country.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto">
       <h1 className="text-3xl font-bold mb-8">Snacks from {countryNameNormalised}</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
