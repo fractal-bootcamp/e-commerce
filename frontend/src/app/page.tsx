@@ -15,7 +15,7 @@ const Page = () => {
   return (
     <div>
       <main>
-        <div className="max-w-7xl mx-auto px-4 py-8 sm:py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:py-12">
           <div className="text-center mb-8 sm:mb-12">
             <h1 className={`text-4xl sm:text-5xl md:text-6xl mb-8 ${lobster.className}`}>
               Welcome to Snack Safari
