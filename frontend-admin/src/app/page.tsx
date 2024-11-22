@@ -1,4 +1,5 @@
 import XHeader from "@/components/XHeader";
+import Link from "next/link";
 
 export default function HomePage() {
   return (
@@ -8,9 +9,9 @@ export default function HomePage() {
         <h2 className="text-xl font-semibold mb-4">Quick Links</h2>
         <ul className="space-y-2">
           <li>
-            <a href="/orders" className="text-blue-600 hover:text-blue-800">
+            <Link href="/orders" className="text-blue-600 hover:text-blue-800">
               → Manage Orders
-            </a>
+            </Link>
           </li>
           <li>
             <a href="/orders/new" className="text-blue-600 hover:text-blue-800">
