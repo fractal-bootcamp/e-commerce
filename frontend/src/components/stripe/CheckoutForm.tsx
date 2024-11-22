@@ -42,12 +42,14 @@ export const CheckoutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement onReady={() => setIsLoading(false)} />
-      <button
-        disabled={!stripe || isLoading}
-        className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors"
-      >
-        {isLoading ? "Loading..." : "Submit"}
-      </button>
+      {!isLoading && (
+        <button
+          disabled={!stripe}
+          className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors"
+        >
+          Submit
+        </button>
+      )}
       {errorMessage && <div>{errorMessage}</div>}
     </form>
   );

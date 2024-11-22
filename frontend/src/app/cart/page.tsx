@@ -1,79 +1,23 @@
 "use client";
 
 import { storeCart } from "@/store/storeCart";
-import { useStoreStripe } from "@/store/storeStripe";
 import Image from "next/image";
-import { z } from "zod";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 import { addOrder } from "@/api/apiOrder";
 import { OrderStatus } from "@/types/types";
 import useProtectedRoute from "@/hooks/useProtectedRoute";
-
-const createPaymentIntentSchema = z.object({
-  cart: z.object({
-    items: z.array(
-      z.object({
-        id: z.string(),
-        quantity: z.number(),
-        priceInCents: z.number(),
-      })
-    ),
-  }),
-  currency: z.string(),
-  metadata: z.record(z.string(), z.string()),
-  orderId: z.string(),
-});
+import { useStoreStripe } from "@/store/storeStripe";
+import { handleStripeIntegration } from "@/utils/handleStripe";
+export type AppRouterInstance = ReturnType<typeof useRouter>;
 
 export default function Cart() {
   useProtectedRoute();
-  const router = useRouter();
   const { items, total, updateQuantity, removeItem } = storeCart();
+  const router = useRouter() as AppRouterInstance;
   const { setClientSecret, setPaymentIntentId } = useStoreStripe();
+  const { items, total, updateQuantity, removeItem } = storeCart();
   const { idToken, firebaseUser } = useAuth();
-
-  const handleTestStripeIntegration = async () => {
-    try {
-      // Validate the data against the schema
-      const validatedData = createPaymentIntentSchema.parse(items);
-
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URL}/payment/createPaymentIntent`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${idToken}`,
-          },
-          body: JSON.stringify(validatedData),
-        }
-      );
-
-      const data = await response.json();
-      // store payment options in global state
-      setClientSecret(data.clientSecret);
-      console.log("client secret", data.clientSecret);
-      // store payment intent id in global state
-      setPaymentIntentId(data.paymentIntentId);
-      console.log("payment intent id", data.paymentIntentId);
-
-      if (!data.clientSecret) {
-        console.error("No client secret received");
-        return;
-      }
-
-      // navigate the user to the payment page
-      router.push("/payment");
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        console.error("Validation error:", error.errors);
-        // Handle validation error (e.g., show error message to user)
-      } else {
-        console.error("Error creating payment intent:", error);
-        // Handle other errors
-      }
-    }
-  };
 
   const handleCreateOrder = async () => {
     if (firebaseUser) {
@@ -87,8 +31,10 @@ export default function Cart() {
     }
   };
 
+  console.log("items", items);
+
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto">
       <h1 className="text-3xl font-bold text-amber-800 mb-8">Your Cart</h1>
 
       {items.length === 0 ? (
@@ -164,20 +110,21 @@ export default function Cart() {
                 </div>
               </div>
               <div className="flex flex-col space-y-2">
-                <button className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors">
-                  Proceed to Checkout
-                </button>
                 <button
-                  onClick={handleCreateOrder}
-                  className="w-full bg-amber-500 text-white py-2 rounded-full hover:bg-amber-600 transition-colors"
-                >
-                  Create order
-                </button>
-                <button
-                  onClick={handleTestStripeIntegration}
+                  onClick={() => {
+                    handleStripeIntegration(
+                      items,
+                      idToken || "",
+                      setClientSecret,
+                      setPaymentIntentId,
+                      router
+                    )
+                      .then(() => handleCreateOrder())
+                      .catch((error) => console.error(error));
+                  }}
                   className="w-full bg-amber-500 text-white py-2 mt-8 rounded-full hover:bg-amber-600 transition-colors"
                 >
-                  Test Stripe Integration
+                  Proceed to Checkout
                 </button>
               </div>
             </div>
