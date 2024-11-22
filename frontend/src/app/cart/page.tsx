@@ -100,7 +100,7 @@ export default function Cart() {
               <div key={item.id} className="flex gap-4 bg-white p-4 rounded-lg shadow-sm mb-4">
                 <div className="relative w-24 h-24">
                   <Image
-                    src={item.imageUrl}
+                    src={item.imageUrl || '/placeholder-image.png'}
                     alt={item.name}
                     fill
                     className="object-cover rounded-md"

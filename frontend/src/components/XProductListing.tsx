@@ -4,7 +4,6 @@
 import { Product } from "@/types/types";
 import Link from "next/link";
 import Image from "next/image";
-import { useState } from "react";
 import AddToCart from "./XAddToCart";
 
 interface XProductListingProps {
@@ -13,18 +12,6 @@ interface XProductListingProps {
 }
 
 const XProductListing = ({ country, products }: XProductListingProps) => {
-  const [selectedQuantities, setSelectedQuantities] = useState<{ [key: string]: number }>({});
-
-  const updateQuantity = (productId: string, delta: number) => {
-    setSelectedQuantities(prev => {
-      const currentQty = prev[productId] || 0;
-      const newQty = Math.max(0, Math.min(
-        currentQty + delta,
-        products.find(p => p.id === productId)?.inventory_count || 0
-      ));
-      return { ...prev, [productId]: newQty };
-    });
-  };
 
   const countryNameNormalised = country.replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
   return (
@@ -53,7 +40,7 @@ const XProductListing = ({ country, products }: XProductListingProps) => {
               <p className="flex text-gray-600 mb-4 line-clamp-2">{product.description}</p>
               <div className="flex justify-evenly items-center mt-auto">
                 <span className="text-lg font-bold">${(product.price / 100).toFixed(2)}</span>
-                <AddToCart product={product} selectedQuantities={selectedQuantities} updateQuantity={updateQuantity} />
+                <AddToCart product={product} />
               </div>
             </div>
           </Link>
