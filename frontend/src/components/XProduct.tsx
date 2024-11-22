@@ -15,9 +15,8 @@ const XProduct = ({ product }: XProductProps) => {
   const [selectedQuantities, setSelectedQuantities] = useState<{ [key: string]: number }>({});
   const { items, addItem } = storeCart();
 
-
   const updateQuantity = (productId: string, delta: number) => {
-    setSelectedQuantities(prev => {
+    setSelectedQuantities((prev) => {
       const currentQty = prev[productId] || 0;
       const newQty = Math.max(0, Math.min(currentQty + delta, product.inventory_count || 0));
       return { ...prev, [productId]: newQty };
@@ -48,7 +47,7 @@ const XProduct = ({ product }: XProductProps) => {
       <h1 className="text-3xl font-bold text-amber-900 text-center mb-4">{product.name}</h1>
       <div className="relative w-full aspect-square max-w-sm mx-auto border border-gray-300 rounded-md my-4">
         <Image
-          src={product.imageUrl || '/placeholder-image.jpg'}
+          src={product.imageUrl || "/placeholder-image.jpg"}
           alt={product.name}
           fill
           className="object-contain"
@@ -56,12 +55,25 @@ const XProduct = ({ product }: XProductProps) => {
       </div>
       <div className="text-2xl font-bold my-4">Price: ${(product.price / 100).toFixed(2)}</div>
       <div className="my-4">
-        <AddToCart product={product} selectedQuantities={selectedQuantities} updateQuantity={updateQuantity} />
-        <div className="text-md my-4"><strong>Status:</strong> {product.inventory_count > 0 ? 'In Stock' : 'Out of Stock'}</div>
+        <AddToCart
+          product={product}
+          selectedQuantities={selectedQuantities}
+          updateQuantity={updateQuantity}
+        />
+        <div className="text-md my-4">
+          <strong>Status:</strong> {product.inventory_count > 0 ? "In Stock" : "Out of Stock"}
+        </div>
+        <button onClick={() => handleAddToCart()}></button>
       </div>
-      <div className="text-md my-4"><strong>Country of Origin:</strong> {product.country}</div>
-      <div className="text-md my-4"><strong>Description:</strong> {product.description}</div>
-      <div className="text-md my-4"><strong>Ingredients:</strong> tbd</div>
+      <div className="text-md my-4">
+        <strong>Country of Origin:</strong> {product.country}
+      </div>
+      <div className="text-md my-4">
+        <strong>Description:</strong> {product.description}
+      </div>
+      <div className="text-md my-4">
+        <strong>Ingredients:</strong> tbd
+      </div>
     </div>
   );
 };

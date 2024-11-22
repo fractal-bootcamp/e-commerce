@@ -23,7 +23,7 @@ const XAIChat = () => {
           Submit
         </button>
       </form>
-      {error && <div className="text-red-500">Query can't be empty</div>}
+      {error && <div className="text-red-500">Query can&apos;t be empty</div>}
     </div>
   );
 };

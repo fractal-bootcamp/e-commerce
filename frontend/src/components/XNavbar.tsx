@@ -5,7 +5,7 @@ import Link from "next/link";
 import XLoginButton from "./XLoginButton";
 import { useState } from "react";
 import XLogoutButton from "./XLogoutButton";
-import { lobster } from "../app/layout";
+import { lobster } from "@/utils/fonts";
 
 export default function XNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -74,12 +74,7 @@ export default function XNavbar() {
               className="text-amber-800 p-2"
               aria-label="Toggle menu"
             >
-              <svg
-                className="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 {isMenuOpen ? (
                   <path
                     strokeLinecap="round"
@@ -108,7 +103,7 @@ export default function XNavbar() {
             overflow-hidden 
             transition-all duration-300 ease-in-out
             shadow-lg
-            ${isMenuOpen ? 'max-h-screen opacity-100' : 'max-h-0 opacity-0'}
+            ${isMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"}
           `}
         >
           <div className="flex flex-col gap-2 py-4">
