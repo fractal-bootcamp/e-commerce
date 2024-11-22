@@ -19,7 +19,9 @@ const ProductContent = () => {
   return (
     <>
       {country && countryProducts ? (
-        <XProductListing country={country} products={countryProducts} />
+        <div>
+          <XProductListing country={country} products={countryProducts} />
+        </div>
       ) : (
         <>Loading...</>
       )}

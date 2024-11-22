@@ -51,7 +51,7 @@ const AddToCart = ({ product }: {
             e.preventDefault();
             updateQuantity(product.id, -1);
           }}
-          className="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded-l-md"
+          className="px-2 py-1 hover:bg-gray-100 rounded-l-md"
           disabled={!selectedQuantities[product.id]}
         >
           -
@@ -64,7 +64,7 @@ const AddToCart = ({ product }: {
             e.preventDefault();
             updateQuantity(product.id, 1);
           }}
-          className="px-2 py-1 text-gray-600 hover:bg-gray-100 rounded-r-md"
+          className="px-2 py-1 hover:bg-gray-100 rounded-r-md"
           disabled={selectedQuantities[product.id] >= (product.inventory_count || 0)}
         >
           +

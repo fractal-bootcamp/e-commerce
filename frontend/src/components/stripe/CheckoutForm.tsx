@@ -1,11 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+import { useStoreStripe } from '@/store/storeStripe';
 
 export const CheckoutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
+  const { clientSecret } = useStoreStripe();
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [paymentDetails, setPaymentDetails] = useState<{
+    amount: number;
+    currency: string;
+  } | null>(null);
+
+  useEffect(() => {
+    if (stripe && elements && clientSecret) {
+      // Fetch payment intent details
+      stripe.retrievePaymentIntent(clientSecret)
+        .then(({ paymentIntent }) => {
+          if (paymentIntent) {
+            setPaymentDetails({
+              amount: paymentIntent.amount / 100, // Convert from cents to dollars
+              currency: paymentIntent.currency
+            });
+          }
+        });
+    }
+  }, [stripe, elements]);
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     // We don't want to let default form submission happen here,
@@ -41,6 +62,11 @@ export const CheckoutForm = () => {
 
   return (
     <form onSubmit={handleSubmit}>
+      {paymentDetails && (
+        <div className="mb-4 text-2xl font-bold">
+          Amount to pay: ${paymentDetails.amount.toFixed(2)}
+        </div>
+      )}
       <PaymentElement onReady={() => setIsLoading(false)} />
       {!isLoading && (
         <button

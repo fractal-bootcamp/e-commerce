@@ -12,7 +12,6 @@ import XProtectedRoute from "@/components/XProtectedRoute";
 export type AppRouterInstance = ReturnType<typeof useRouter>;
 
 export default function Cart() {
-  const { items, total, updateQuantity, removeItem } = storeCart();
   const router = useRouter() as AppRouterInstance;
   const { setClientSecret, setPaymentIntentId } = useStoreStripe();
   const { items, total, updateQuantity, removeItem } = storeCart();
