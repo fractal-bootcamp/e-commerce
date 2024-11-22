@@ -3,6 +3,7 @@
 import XProductListing from "@/components/XProductListing";
 import { useProducts } from "@/hooks/useProducts";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 
 const Page = () => {
   const searchParams = useSearchParams();
@@ -14,7 +15,9 @@ const Page = () => {
 
   return (
     <div className="container mx-auto">
-      <XProductListing country={country} products={countryProducts} />
+      <Suspense fallback={<div>Loading...</div>}>
+        <XProductListing country={country} products={countryProducts} />
+      </Suspense>
     </div>
   );
 };
