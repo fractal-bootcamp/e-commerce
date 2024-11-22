@@ -15,7 +15,7 @@ const XProduct = ({ product }: XProductProps) => {
       <h1 className="text-3xl font-bold text-amber-900 text-center mb-4">{product.name}</h1>
       <div className="relative w-full aspect-square max-w-sm mx-auto border border-gray-300 rounded-md my-4">
         <Image
-          src={product.imageUrl || '/placeholder-image.jpg'}
+          src={product.imageUrl || "/placeholder-image.jpg"}
           alt={product.name}
           fill
           className="object-contain"
@@ -24,11 +24,19 @@ const XProduct = ({ product }: XProductProps) => {
       <div className="text-2xl font-bold my-4">Price: ${(product.price / 100).toFixed(2)}</div>
       <div className="my-4">
         <AddToCart product={product} />
-        <div className="text-md my-4"><strong>Status:</strong> {product.inventory_count > 0 ? 'In Stock' : 'Out of Stock'}</div>
+        <div className="text-md my-4">
+          <strong>Status:</strong> {product.inventory_count > 0 ? "In Stock" : "Out of Stock"}
+        </div>
       </div>
-      <div className="text-md my-4"><strong>Country of Origin:</strong> {product.country}</div>
-      <div className="text-md my-4"><strong>Description:</strong> {product.description}</div>
-      <div className="text-md my-4"><strong>Ingredients:</strong> tbd</div>
+      <div className="text-md my-4">
+        <strong>Country of Origin:</strong> {product.country}
+      </div>
+      <div className="text-md my-4">
+        <strong>Description:</strong> {product.description}
+      </div>
+      <div className="text-md my-4">
+        <strong>Ingredients:</strong> tbd
+      </div>
     </div>
   );
 };

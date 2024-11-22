@@ -6,7 +6,7 @@ interface XOrderFiltersProps {
     dateFrom: string;
     dateTo: string;
   };
-  setFilters: (filters: any) => void;
+  setFilters: (filters: { status: string; dateFrom: string; dateTo: string }) => void;
 }
 
 const XOrderFilters = ({ filters, setFilters }: XOrderFiltersProps) => {
