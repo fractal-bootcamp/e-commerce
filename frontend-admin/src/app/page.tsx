@@ -14,9 +14,9 @@ export default function HomePage() {
             </Link>
           </li>
           <li>
-            <a href="/orders/new" className="text-blue-600 hover:text-blue-800">
+            <Link href="/orders/new" className="text-blue-600 hover:text-blue-800">
               → Create New Order
-            </a>
+            </Link>
           </li>
         </ul>
       </div>
