@@ -1,10 +1,9 @@
 name: Load RAG Database
 
 on:
-  # Adjust triggers as needed
   push:
     branches: [main]
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch:
 
 jobs:
   load-rag:
@@ -17,11 +16,13 @@ jobs:
         uses: oven-sh/setup-bun@v1
 
       - name: Install dependencies
+        working-directory: ./backend
         run: bun install
 
       - name: Run RAG loader script
+        working-directory: ./backend
         env:
           OPENAI_KEY: ${{ secrets.OPENAI_KEY }}
           DATABASE_URL_DEV: ${{ secrets.DATABASE_URL_DEV }}
           RAG_DATABASE_URL: ${{ secrets.RAG_DATABASE_URL }}
-        run: bash backend/scripts/loadRagDB.sh
+        run: bash scripts/loadRagDB.sh
