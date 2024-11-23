@@ -11,7 +11,7 @@ interface XOrderFiltersProps {
 
 const XOrderFilters = ({ filters, setFilters }: XOrderFiltersProps) => {
   return (
-    <div className="mb-6 bg-white p-4 rounded-lg shadow space-y-4">
+    <div className="mb-6 bg-secondary p-6 rounded-lg shadow-sm space-y-4">
       <h2 className="text-lg font-semibold mb-4">Filters</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div>

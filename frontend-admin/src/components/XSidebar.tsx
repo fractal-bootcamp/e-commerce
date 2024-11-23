@@ -31,7 +31,7 @@ const XSidebar = () => {
   ];
 
   return (
-    <div className="w-64 min-h-screen bg-gray-800 text-white">
+    <div className="w-64 min-h-screen bg-sidebar text-gray-300">
       {/* Logo Section */}
       <div className="h-16 flex items-center px-6 bg-gray-900">
         <span className="text-xl font-semibold">Snack Safari Admin</span>
