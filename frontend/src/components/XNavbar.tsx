@@ -59,6 +59,12 @@ export default function XNavbar() {
             >
               About
             </Link>
+            <Link
+              href="/chat"
+              className="text-amber-800 hover:text-amber-600 transition-colors px-3 py-2 rounded-md text-sm font-medium"
+            >
+              AI Chat
+            </Link>
             {firebaseUser && idToken ? <XLogoutButton /> : <XLoginButton />}
             <Link
               href="/cart"
