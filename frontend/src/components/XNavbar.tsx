@@ -123,11 +123,11 @@ export default function XNavbar() {
               About
             </Link>
             {firebaseUser && idToken ? (
-              <div className="px-3">
+              <div>
                 <XLogoutButton />
               </div>
             ) : (
-              <div className="px-3">
+              <div>
                 <XLoginButton />
               </div>
             )}

@@ -9,9 +9,20 @@ if (!process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY) {
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 export function PaymentsPage({ paymentOptions }: { paymentOptions: StripeElementsOptions }) {
+  const appearance = {
+    theme: 'night' as const,
+  };
+
+  const updatedOptions = {
+    ...paymentOptions,
+    appearance,
+  };
+
   return (
-    <Elements stripe={stripePromise} options={paymentOptions}>
-      <CheckoutForm />
-    </Elements>
+    <div className="dark:text-white">
+      <Elements stripe={stripePromise} options={updatedOptions}>
+        <CheckoutForm />
+      </Elements>
+    </div>
   );
 }
