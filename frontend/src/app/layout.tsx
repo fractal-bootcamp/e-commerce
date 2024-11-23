@@ -15,7 +15,7 @@ export default function RootLayout({
       <AuthProvider>
         <body suppressHydrationWarning className={`antialiased ${openSans.className}`}>
           <XNavbar />
-          <div className="bg-[#f4f5ef] dark:bg-neutral-600 dark:text-gray-200 min-h-screen px-6 pt-24">
+          <div className="bg-[#f4f5ef] dark:bg-amber-700 dark:text-gray-200 min-h-screen px-6 pt-24">
             {children}
           </div>
         </body>
