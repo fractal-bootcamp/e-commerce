@@ -20,9 +20,9 @@ export default function XNavbar() {
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, []);
 
@@ -58,6 +58,12 @@ export default function XNavbar() {
               className="text-amber-800 hover:text-amber-600 transition-colors px-3 py-2 rounded-md text-sm font-medium"
             >
               About
+            </Link>
+            <Link
+              href="/chat"
+              className="text-amber-800 hover:text-amber-600 transition-colors px-3 py-2 rounded-md text-sm font-medium"
+            >
+              AI Chat
             </Link>
             {firebaseUser && idToken ? <XLogoutButton /> : <XLoginButton />}
             <Link
@@ -135,6 +141,13 @@ export default function XNavbar() {
               onClick={() => setIsMenuOpen(false)}
             >
               About
+            </Link>
+            <Link
+              href="/chat"
+              className="text-amber-800 hover:text-amber-600 transition-colors px-3 py-2 rounded-md text-sm font-medium transform hover:translate-x-2 transition-transform duration-200"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              AI Chat
             </Link>
             {firebaseUser && idToken ? (
               <div>
