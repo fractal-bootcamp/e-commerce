@@ -12,7 +12,7 @@ interface XOrdersTableProps {
 const XOrdersTable = ({ orders, onStatusChange, onDelete }: XOrdersTableProps) => {
   return (
     <div className="overflow-x-auto">
-      <table className="min-w-full bg-white">
+      <table className="min-w-full bg-secondary rounded-lg overflow-hidden">
         <thead>
           <tr className="bg-gray-50 border-b">
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">

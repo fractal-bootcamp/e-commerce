@@ -3,18 +3,41 @@
 @tailwind utilities;
 
 :root {
-  --background: #F5E6D3;
-  --foreground: #2C1810;
-}   
+  --background: #f8f9fa;
+  --foreground: #2d3748;
+  --primary: #7c3aed;
+  --primary-dark: #6d28d9;
+  --secondary: #f3f4f6;
+  --accent: #8b5cf6;
+  --sidebar: #1a1c23;
+  --sidebar-hover: #2d3748;
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #78350F;
-    --foreground: #F5E6D3;
+    --background: #1a1c23;
+    --foreground: #f8f9fa;
+    --secondary: #2d3748;
+    --sidebar: #0f172a;
+    --sidebar-hover: #1e293b;
   }
 }
 
 body {
   color: var(--foreground);
   background: var(--background);
+}
+
+/* Custom styles for form elements */
+.form-input,
+.form-select {
+  @apply rounded-lg border-gray-300 shadow-sm focus:border-accent focus:ring-accent;
+}
+
+.btn-primary {
+  @apply bg-primary text-white px-4 py-2 rounded-lg hover:bg-primary-dark transition-colors;
+}
+
+.card {
+  @apply bg-secondary rounded-lg shadow-sm p-6;
 } 
