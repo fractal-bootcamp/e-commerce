@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import XLoginButton from "./XLoginButton";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import XLogoutButton from "./XLogoutButton";
 import { lobster } from "@/utils/fonts";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,9 +11,23 @@ import { useAuth } from "@/hooks/useAuth";
 export default function XNavbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { firebaseUser, idToken } = useAuth();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+        setIsMenuOpen(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   return (
-    <nav className="top-0 left-0 right-0 z-50 bg-amber-50 border-b-2 border-amber-200">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-amber-50 border-b-2 border-amber-200">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -69,7 +83,7 @@ export default function XNavbar() {
           </div>
 
           {/* Mobile menu button - moved to the right */}
-          <div className="md:hidden">
+          <div ref={menuRef} className="md:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-amber-800 p-2"
@@ -123,11 +137,11 @@ export default function XNavbar() {
               About
             </Link>
             {firebaseUser && idToken ? (
-              <div className="px-3">
+              <div>
                 <XLogoutButton />
               </div>
             ) : (
-              <div className="px-3">
+              <div>
                 <XLoginButton />
               </div>
             )}

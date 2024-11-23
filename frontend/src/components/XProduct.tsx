@@ -12,8 +12,8 @@ const XProduct = ({ product }: XProductProps) => {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold text-center mb-4">{product.name}</h1>
-      <div className="relative w-full aspect-video max-w-sm mx-auto border-gray-300 rounded-md my-4">
+      <h1 className="text-3xl font-bold text-center mb-8">{product.name}</h1>
+      <div className="relative w-full aspect-video max-w-sm mx-auto border-gray-300 border rounded-md my-4">
         <Image
           src={product.imageUrl || "/placeholder-image.jpg"}
           alt={product.name}

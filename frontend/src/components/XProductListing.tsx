@@ -25,10 +25,10 @@ const XProductListing = ({ country, products }: XProductListingProps) => {
             href={`/products/${product.id}`}
             className="bg-white dark:bg-neutral-100 dark:text-amber-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow"
           >
-            <div className="flex flex-col h-full p-4 border-b-2 border-gray-200 dark:border-neutral-500">
+            <div className="flex flex-col h-full p-4 border-2 border-gray-200 dark:border-neutral-500">
               <h2 className="flex text-xl font-semibold mb-2">{product.name}</h2>
               {product.imageUrl && (
-                <div className="relative w-full aspect-video mb-4">
+                <div className="relative w-full aspect-video mb-4 border">
                   <Image
                     src={product.imageUrl}
                     alt={product.name}

@@ -9,7 +9,7 @@ const XLoginButton = () => {
     router.push("/");
   };
   return (
-    <button onClick={handleLogin} className="text-black">
+    <button onClick={handleLogin} className="text-amber-800 hover:text-amber-600 transition-colors px-3 py-2 rounded-md text-sm font-medium">
       Login
     </button>
   );
