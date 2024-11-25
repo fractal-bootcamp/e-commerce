@@ -1,4 +1,5 @@
 import { VERCEL_TOKEN } from "../globals";
+import { sendEmail } from "../notifications/nodemailer";
 import { getVercelErrorLogs } from "./getVercelErrorLogs";
 
 const vercelLoggingMain = async (): Promise<[string[], string[]]> => {
@@ -12,6 +13,9 @@ const vercelLoggingMain = async (): Promise<[string[], string[]]> => {
   ]);
 
   console.log(userLogs, adminLogs);
+
+  // Email logs
+  await sendEmail("dgavidia1@gmail.com", "Test", "test", userLogs[0]);
   return [userLogs, adminLogs];
 };
 
