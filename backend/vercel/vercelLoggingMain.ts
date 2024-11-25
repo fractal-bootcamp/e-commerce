@@ -1,4 +1,4 @@
-import { VERCEL_TOKEN } from "../globals";
+import { NODEMAILER_EMAIL_PASSWORD, NODEMAILER_EMAIL_USER, VERCEL_TOKEN } from "../globals";
 import { sendEmail } from "../notifications/nodemailer";
 import type { VercelDeployment } from "../types/notifications";
 import { getVercelFailedDeployments } from "./getVercelFailedDeployments";
@@ -21,7 +21,8 @@ const vercelLoggingMain = async (): Promise<void> => {
     ]);
 
   const allDeployments = [...userDeployments, ...adminDeployments];
-  console.log(allDeployments);
+  console.log(NODEMAILER_EMAIL_PASSWORD);
+  console.log(NODEMAILER_EMAIL_USER);
 
   await Promise.all(
     emailRecipients.flatMap((recipient) =>
