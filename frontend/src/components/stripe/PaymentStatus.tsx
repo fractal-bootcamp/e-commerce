@@ -1,73 +1,69 @@
-import { useEffect } from "react";
-import { useStripe } from "@stripe/react-stripe-js";
-import { useStoreStripe } from "@/store/storeStripe";
+"use client";
 
-export const PaymentStatus = () => {
-  const stripe = useStripe();
-  const { setPaymentStatus } = useStoreStripe();
+import { useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
+
+export default function PaymentStatus({ redirectStatus }: { redirectStatus: string }) {
+  const router = useRouter();
+  const [message, setMessage] = useState<string>('');
 
   useEffect(() => {
-    if (!stripe) {
-      return;
+    if (redirectStatus === 'succeeded') {
+      setMessage('Payment successful!');
+    } else if (redirectStatus === 'processing') {
+      setMessage('Your payment is processing...');
+    } else if (redirectStatus === 'failed') {
+      setMessage('Payment failed. Please try again.');
     }
+  }, [redirectStatus]);
 
-    // Retrieve the "payment_intent_client_secret" query parameter appended to
-    // your return_url by Stripe.js
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-
-    // Retrieve the PaymentIntent
-    stripe.retrievePaymentIntent(clientSecret || "").then(({ paymentIntent }) => {
-      // Inspect the PaymentIntent `status` to indicate the status of the payment
-      // to your customer.
-      //
-      // Some payment methods will [immediately succeed or fail][0] upon
-      // confirmation, while others will first enter a `processing` state.
-      //
-      // [0]: https://stripe.com/docs/payments/payment-methods#payment-notification
-      switch (paymentIntent?.status) {
-        case "succeeded":
-          console.log("Payment succeeded");
-          setPaymentStatus("success");
-          return (
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-green-600">Payment Successful!</h2>
-              <p className="mt-2">Thank you for your payment.</p>
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="max-w-md w-full p-6 bg-white rounded-lg shadow-lg">
+        {redirectStatus === 'succeeded' && (
+          <div className="text-center">
+            <div className="mb-4 text-green-600">
+              <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
             </div>
-          );
+            <h2 className="text-2xl font-bold text-green-600">Payment Successful!</h2>
+            <p className="mt-2 text-gray-600">{message}</p>
+            <button
+              onClick={() => router.push('/')}
+              className="mt-4 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition-colors"
+            >
+              Return to Home
+            </button>
+          </div>
+        )}
 
-        case "processing":
-          setPaymentStatus("processing");
-          return (
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-blue-600">Processing Payment...</h2>
-              <p className="mt-2">Please wait while we confirm your payment.</p>
+        {redirectStatus === 'processing' && (
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto mb-4"></div>
+            <h2 className="text-2xl font-bold text-blue-600">Processing Payment...</h2>
+            <p className="mt-2 text-gray-600">{message}</p>
+          </div>
+        )}
+
+        {(redirectStatus === 'failed' || !redirectStatus) && (
+          <div className="text-center">
+            <div className="mb-4 text-red-600">
+              <svg className="w-16 h-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
             </div>
-          );
-
-        case "requires_payment_method":
-          // Redirect your user back to your payment page to attempt collecting
-          // payment again
-          setPaymentStatus("failed_try_again");
-          return (
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-red-600">Payment Failed</h2>
-              <p className="mt-2">Please try again with a different payment method.</p>
-            </div>
-          );
-
-        default:
-          setPaymentStatus("error");
-          return (
-            <div className="text-center">
-              <h2 className="text-2xl font-bold text-red-600">Something went wrong</h2>
-              <p className="mt-2">An error occurred while processing your payment.</p>
-            </div>
-          );
-      }
-    });
-  }, [stripe, setPaymentStatus]);
-
-  return null;
-};
+            <h2 className="text-2xl font-bold text-red-600">Payment Failed</h2>
+            <p className="mt-2 text-gray-600">{message}</p>
+            <button
+              onClick={() => router.push('/checkout')}
+              className="mt-4 px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+            >
+              Try Again
+            </button>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
