@@ -1,7 +1,10 @@
 import { getVercelDeployments } from "./getVercelDeployments";
 import { getVercelLogs } from "./getVercelLogs";
 
-export const getVercelErrorLogs = async (projectName: string, vercelToken: string) => {
+export const getVercelErrorLogs = async (
+  projectName: string,
+  vercelToken: string
+): Promise<string[]> => {
   // Get latest deployments
   const deployments = await getVercelDeployments(100, projectName, vercelToken);
 
@@ -9,7 +12,7 @@ export const getVercelErrorLogs = async (projectName: string, vercelToken: strin
   const failedDeployments = deployments.filter((d: any) => d.state === "ERROR");
 
   // Get error logs for failed deployments
-  const errorLogs = Promise.all(
+  const errorLogs: Promise<string[]> = Promise.all(
     failedDeployments.map((deployment: any) => getVercelLogs(deployment.uid, vercelToken))
   );
 
