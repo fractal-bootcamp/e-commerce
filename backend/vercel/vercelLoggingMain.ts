@@ -3,6 +3,12 @@ import { sendEmail } from "../notifications/nodemailer";
 import type { VercelDeployment } from "../types/notifications";
 import { getVercelFailedDeployments } from "./getVercelFailedDeployments";
 
+const emailRecipients = [
+  "dgavidia1@gmail.com",
+  "malin.kankanamge@gmail.com",
+  "aadityadesai09@gmail.com",
+];
+
 const vercelLoggingMain = async (): Promise<void> => {
   if (!VERCEL_TOKEN) {
     throw new Error("No token provided");
@@ -14,9 +20,20 @@ const vercelLoggingMain = async (): Promise<void> => {
       getVercelFailedDeployments("snack-safari-admin", VERCEL_TOKEN),
     ]);
 
-  // Email logs
-  // await sendEmail("dgavidia1@gmail.com", "Test", "test", userLogs[0]);
-  // return [userDeployments, admin];
+  const allDeployments = [...userDeployments, ...adminDeployments];
+
+  await Promise.all(
+    emailRecipients.flatMap((recipient) =>
+      allDeployments.map((deployment) =>
+        sendEmail(
+          recipient,
+          `Vercel Deployment Error: ${deployment.name}, ${deployment.created.toISOString()}`,
+          undefined,
+          deployment.html
+        )
+      )
+    )
+  );
 };
 
 await vercelLoggingMain();

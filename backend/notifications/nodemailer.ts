@@ -4,7 +4,7 @@ import { NODEMAILER_EMAIL_PASSWORD, NODEMAILER_EMAIL_USER } from "../globals";
 export const sendEmail = async (
   to: string,
   subject: string,
-  text: string,
+  text?: string,
   html?: string
 ): Promise<void> => {
   // Create a transporter with your email service credentials
