@@ -14,7 +14,6 @@ export const getVercelDeployments = async (
     },
   });
   const data = res.data.deployments;
-  const twelveHoursAgo = new Date(new Date().toISOString()).setHours(new Date().getUTCHours() - 12);
 
   const dataParsed: VercelDeployment[] = data
     .map((d: any) => ({
@@ -24,7 +23,8 @@ export const getVercelDeployments = async (
       state: d.state,
     }))
     .filter(
-      (d: VercelDeployment) => d.name === projectName && d.created.getTime() >= twelveHoursAgo
+      (d: VercelDeployment) => d.name === projectName
+      // && d.created.getTime() >= twelveHoursAgo
     );
   return dataParsed;
 };

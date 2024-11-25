@@ -1,9 +1,8 @@
 name: Vercel Deployment Notifications
 
 on:
-  push:
-    branches:
-      - main
+  schedule:
+    - cron: "0 14,16,18,20,22 * * *" # 10:00 AM ET
   workflow_dispatch:
 
 jobs:
@@ -11,9 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Sleep for 1 minute
-        run: sleep 60
-
       - name: Checkout repository
         uses: actions/checkout@v4
 

@@ -21,6 +21,7 @@ const vercelLoggingMain = async (): Promise<void> => {
     ]);
 
   const allDeployments = [...userDeployments, ...adminDeployments];
+  console.log(allDeployments);
 
   await Promise.all(
     emailRecipients.flatMap((recipient) =>

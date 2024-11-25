@@ -10,12 +10,16 @@ export const sendEmail = async (
   // Create a transporter with your email service credentials
   const transporter = nodemailer.createTransport({
     service: "gmail",
+    // secure: false,
     auth: {
       user: NODEMAILER_EMAIL_USER,
       pass: NODEMAILER_EMAIL_PASSWORD,
     },
     logger: true,
     debug: true,
+    // tls: {
+    //   rejectUnauthorized: false, // Use carefully in production
+    // },
   });
 
   // Define the email options
