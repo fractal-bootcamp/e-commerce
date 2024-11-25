@@ -6,6 +6,8 @@ bash scripts/dockerWipe.sh
 # Create local database
 bash scripts/db.sh
 
+# Seed the database
+bash scripts/seed.sh
+
 # Spin up server
-docker-compose down
-docker-compose up --build
+bash scripts/server.sh

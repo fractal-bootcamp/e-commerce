@@ -1,2 +1,3 @@
 #!/bin/sh
-bun run --watch server.ts
+docker-compose down
+docker-compose up --build
