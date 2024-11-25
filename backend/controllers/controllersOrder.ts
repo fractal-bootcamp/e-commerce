@@ -66,7 +66,8 @@ export const addOrder = withLogging("addOrder", false, async (req: Request, res:
   });
 
   if (!userExists) {
-    return res.status(404).json({ error: "User not found" });
+    res.status(404).json({ error: "User not found" });
+    return;
   }
 
   const orderStatusTyped: OrderStatus = orderStatus;
