@@ -93,8 +93,47 @@ const products = [
   },
 ];
 
+const additionalProducts = [
+  {
+    name: 'Pods Twix',
+    description: 'Crunchy biscuit shell filled with Twix-flavored cream and covered in milk chocolate',
+    imageUrl: 'https://res.cloudinary.com/ds4kobyhb/image/upload/v1732515364/snack-safari/pods-twix.png',
+    country: 'AUSTRALIA' as const,
+    category: 'sweets',
+    inventory_count: 100,
+    price: 799,
+  },
+  {
+    name: 'Caramello Koala',
+    description: 'Milk chocolate koala-shaped treats filled with flowing caramel',
+    imageUrl: 'https://res.cloudinary.com/ds4kobyhb/image/upload/v1732515364/snack-safari/koala.png',
+    country: 'AUSTRALIA' as const,
+    category: 'sweets',
+    inventory_count: 150,
+    price: 399,
+  },
+  {
+    name: 'Maliban Krisco',
+    description: 'Popular Sri Lankan cream crackers perfect for snacking and creating canapés',
+    imageUrl: 'https://res.cloudinary.com/ds4kobyhb/image/upload/v1732515364/snack-safari/krisco.png',
+    country: 'SRI_LANKA' as const,
+    category: 'snacks',
+    inventory_count: 80,
+    price: 1099,
+  },
+  {
+    name: 'Lays Magic Masala',
+    description: 'Potato chips flavored with a blend of authentic Indian spices',
+    imageUrl: 'https://res.cloudinary.com/ds4kobyhb/image/upload/v1732515364/snack-safari/lays-magic-masala.png',
+    country: 'INDIA' as const,
+    category: 'snacks',
+    inventory_count: 100,
+    price: 449,
+  },
+]
+
 const main = async () => {
-  for (const product of products) {
+  for (const product of additionalProducts) {
     const response = await prisma.product.create({
       data: product,
     });

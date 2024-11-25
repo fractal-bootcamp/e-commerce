@@ -31,7 +31,7 @@ const XProduct = ({ product }: XProductProps) => {
         </div>
       </div>
       <div className="text-md my-4">
-        <strong>Country of Origin:</strong> {product.country}
+        <strong>Country of Origin:</strong> {product.country.replace(/_/g, ' ')}
       </div>
       <div className="text-md my-4">
         <strong>Description:</strong> {product.description}
