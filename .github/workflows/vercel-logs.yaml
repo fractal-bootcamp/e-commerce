@@ -11,8 +11,8 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Sleep for 10 minutes
-        run: sleep 600
+      - name: Sleep for 1 minute
+        run: sleep 60
 
       - name: Checkout repository
         uses: actions/checkout@v4
