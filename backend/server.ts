@@ -1,6 +1,6 @@
 import { PORT } from "./globals";
 import express from "express";
-import { verifyFirebaseToken } from "./firebase/middleware";
+import { verifyFirebaseToken } from "./firebase/firebaseMiddleware";
 import routesAuth from "./routes/routesAuth";
 import routesProduct from "./routes/routesProduct";
 import routesOrder from "./routes/routesOrder";
