@@ -1,0 +1,31 @@
+name: Vercel Deployment Notifications
+
+on:
+  schedule:
+    # 10:15am, 12:15pm, 2:15pm, 4:15pm, 6:15pm, 8:15pm ET
+    - cron: "15 15,17,19,21,23,1 * * 1-5"
+  workflow_dispatch:
+
+jobs:
+  send-notifications:
+    runs-on: ubuntu-latest
+
+    env:
+      NODEMAILER_USER_EMAIL: ${{ secrets.NODEMAILER_USER_EMAIL }}
+      NODEMAILER_USER_PASSWORD: ${{ secrets.NODEMAILER_USER_PASSWORD }}
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v1
+
+      - name: Install dependencies
+        working-directory: ./backend
+        run: bun install
+
+      - name: Run Vercel notifications script
+        working-directory: ./backend
+        run: bash scripts/vercelNotifications.sh
