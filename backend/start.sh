@@ -1,5 +1,11 @@
 #!/bin/sh
-docker rm -vf $(docker ps -aq)
-docker rmi -f $(docker images -aq)
 
-docker-compose up
+# Wipe current containers/images
+bash scripts/dockerWipe.sh
+
+# Create local database
+bash scripts/db.sh
+
+# Spin up server
+docker-compose down
+docker-compose up --build
