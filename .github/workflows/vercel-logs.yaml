@@ -23,7 +23,7 @@ jobs:
       - name: Run Vercel notifications script
         working-directory: ./backend
         env:
-          NODEMAILER_USER_EMAIL: ${{ secrets.NODEMAILER_USER_EMAIL }}
-          NODEMAILER_USER_PASSWORD: ${{ secrets.NODEMAILER_USER_PASSWORD }}
+          NODEMAILER_USER_EMAIL: ${{ secrets.NODEMAILER_EMAIL_USER }}
+          NODEMAILER_USER_PASSWORD: ${{ secrets.NODEMAILER_EMAIL_PASSWORD }}
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
         run: bash scripts/vercelNotifications.sh
