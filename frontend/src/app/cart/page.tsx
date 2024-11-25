@@ -9,6 +9,7 @@ import { OrderStatus } from "@/types/types";
 import { useStoreStripe } from "@/store/storeStripe";
 import { handleStripeIntegration } from "@/utils/handleStripe";
 import XProtectedRoute from "@/components/XProtectedRoute";
+import { FaTrash } from 'react-icons/fa';
 export type AppRouterInstance = ReturnType<typeof useRouter>;
 
 export default function Cart() {
@@ -67,9 +68,10 @@ export default function Cart() {
                     </div>
                     <button
                       onClick={() => removeItem(item.id)}
-                      className="px-3 py-1.5 bg-red-300 hover:bg-red-600 text-white rounded-md transition-colors duration-200 h-fit"
+                      className="p-2 bg-red-300 hover:bg-red-600 text-white rounded-md transition-colors duration-200 h-fit"
+                      aria-label="Remove item"
                     >
-                      Remove
+                      <FaTrash size={16} />
                     </button>
                   </div>
                   <div className="flex items-center mt-2 justify-between">
