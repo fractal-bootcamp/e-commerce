@@ -5,10 +5,13 @@ import type { Request, Response } from "express";
 
 export const redisTest = withLogging("redisTest", false, async (req: Request, res: Response) => {
   const { data } = req.body;
+  console.log(data);
   const cacheKey = createHash("sha256").update(JSON.stringify(data)).digest("hex");
+  console.log(cacheKey);
 
   // Try getting cached data; if in cache, return
   const cachedData = await redisClient.get(`cache:${cacheKey}`);
+  console.log(cachedData);
   if (cachedData) {
     console.log("Cache hit on key: ", cacheKey);
     console.log("cachedData: ", cachedData);
@@ -24,6 +27,7 @@ export const redisTest = withLogging("redisTest", false, async (req: Request, re
     country: "US",
     category: "Clothing",
   };
-  await redisClient.setex(`cache${cacheKey}`, 3600, JSON.stringify(newData));
+  await redisClient.setex(`cache:${cacheKey}`, 3600, JSON.stringify(newData));
+  console.log("loaded on Redis");
   res.status(200).json(newData);
 });
