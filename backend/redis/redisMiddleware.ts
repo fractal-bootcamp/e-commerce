@@ -2,7 +2,7 @@ import { createHash } from "crypto";
 import { redisClient } from "../redis/redisClient";
 import type { Request, Response, NextFunction } from "express";
 
-export const redisCache = (expirationTime = 3600) => {
+export const redisMiddleware = (expirationTime = 3600) => {
   return async (req: Request, res: Response, next: NextFunction) => {
     const requestData = {
       body: req.body,
