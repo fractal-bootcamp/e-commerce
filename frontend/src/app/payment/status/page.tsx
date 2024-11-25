@@ -2,8 +2,9 @@
 
 import PaymentStatus from "@/components/stripe/PaymentStatus";
 import { useSearchParams, useRouter } from 'next/navigation';
+import { Suspense } from 'react';
 
-export default function PaymentStatusPage() {
+function PaymentStatusContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
@@ -18,4 +19,12 @@ export default function PaymentStatusPage() {
   }
 
   return <PaymentStatus redirectStatus={redirectStatus} />;
+}
+
+export default function PaymentStatusPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentStatusContent />
+    </Suspense>
+  );
 }
