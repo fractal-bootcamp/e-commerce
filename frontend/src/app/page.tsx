@@ -1,16 +1,16 @@
 "use client";
 
 // import XAIChat from "@/components/XAIChat";
-import { useAuth } from "@/hooks/useAuth";
+// import { useAuth } from "@/hooks/useAuth";
 // import Image from "next/image";
 import { lobster, openSans } from "@/utils/fonts";
 import CountrySelector from "@/components/CountrySelector";
 
 const Page = () => {
-  const { idToken, firebaseUser } = useAuth();
+  // const { idToken, firebaseUser } = useAuth();
 
-  console.log(idToken);
-  console.log(firebaseUser);
+  // console.log(idToken);
+  // console.log(firebaseUser);
 
   return (
     <div>
