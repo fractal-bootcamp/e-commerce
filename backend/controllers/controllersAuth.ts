@@ -7,23 +7,26 @@ export const firebaseSignup = withLogging(
   false,
   async (req: Request, res: Response) => {
     const { firebaseId, email } = req.body;
-
-    const existingUser = await prisma.user.findUnique({
-      where: { auth0Id: firebaseId },
+    const existingUser = await prisma.user.findFirst({
+      where: {
+        OR: [{ auth0Id: firebaseId }, { email: email }],
+      },
     });
 
     if (existingUser) {
-      // If user already exists
-      res.status(200).json({ message: "User already exists." });
-    } else {
-      // If user does not exist
-      const response = await prisma.user.create({
-        data: {
-          auth0Id: firebaseId,
-          email: email,
-        },
-      });
-      res.status(200).json(response);
+      const errorMessage =
+        existingUser.auth0Id === firebaseId
+          ? "Firebase ID already registered"
+          : "Email already registered";
+      res.status(409).json({ error: errorMessage });
     }
+
+    const response = await prisma.user.create({
+      data: {
+        auth0Id: firebaseId,
+        email: email,
+      },
+    });
+    res.status(201).json(response);
   }
 );
