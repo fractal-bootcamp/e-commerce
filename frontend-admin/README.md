@@ -1,36 +1,184 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Snack Safari Admin Dashboard
 
-## Getting Started
+## Project Overview
 
-First, run the development server:
+The Snack Safari Admin Dashboard is a Next.js application that provides administrative tools for managing the e-commerce platform. It offers interfaces for order management, product administration, and user oversight.
+
+### Key Features
+
+- Order management and tracking
+- Product inventory control
+- User management
+- Protected admin routes
+- Real-time order status updates
+- Secure admin authentication
+
+### Technologies
+
+- Next.js 15
+- React 18
+- TypeScript
+- Tailwind CSS
+- Firebase Authentication
+- Zustand (State Management)
+- Axios
+
+## Project Structure
+
+```
+frontend-admin/
+├── src/
+│   ├── app/             # Next.js app router pages
+│   │   ├── orders/      # Order management pages
+│   │   └── login/       # Admin authentication
+│   ├── components/      # React components
+│   ├── api/            # API client functions
+│   ├── hooks/          # Custom React hooks
+│   └── types/          # TypeScript type definitions
+├── public/             # Static assets
+└── tailwind.config.js  # Tailwind configuration
+```
+
+### Key Components
+
+- `XOrdersTable.tsx` - Order management interface
+- `XOrderFilters.tsx` - Order filtering and search
+- `XProtectedRoute.tsx` - Admin route protection
+- `XSidebar.tsx` - Admin navigation
+
+## Prerequisites
+
+- Node.js 16+
+- Firebase Account
+- Backend API running
+- Admin access credentials
+
+## Installation & Setup
+
+1. Clone the repository
+
+```bash
+git clone <repository-url>
+cd frontend-admin
+```
+
+2. Install dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+3. Set up environment variables
+
+```bash
+cp .env.template .env.local
+```
+
+4. Configure environment variables:
+
+```
+# Firebase
+NEXT_PUBLIC_FIREBASE_API_KEY=
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=
+
+# Backend
+NEXT_PUBLIC_BACKEND_URL=
+
+# Admin Configuration
+NEXT_PUBLIC_ADMIN_EMAILS=     # Comma-separated list of admin email addresses
+```
+
+5. Start the development server
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Running the Application
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The application will be available at `http://localhost:3001`
 
-## Learn More
+### Available Scripts
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run dev      # Start development server
+npm run build    # Create production build
+npm run start    # Start production server
+npm run lint     # Run ESLint
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Security
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### Admin Authentication
 
-## Deploy on Vercel
+The admin dashboard uses Firebase Authentication with additional email verification:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```typescript
+const ALLOWED_ADMIN_EMAILS =
+  process.env.NEXT_PUBLIC_ADMIN_EMAILS?.split(",") || [];
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+if (!ALLOWED_ADMIN_EMAILS.includes(user.email)) {
+  throw new Error("Unauthorized access");
+}
+```
+
+### Protected Routes
+
+All admin routes are protected using the `XProtectedRoute` component:
+
+```typescript
+const XProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  const { user, loading } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading]);
+
+  return <>{children}</>;
+};
+```
+
+## Features
+
+### Order Management
+
+- View all orders with filtering and sorting
+- Update order status
+- View detailed order information
+- Process refunds
+- Track order history
+
+### User Management
+
+- View user accounts
+- Monitor user activity
+- Manage user permissions
+
+## Pages
+
+- `/` - Dashboard overview
+- `/orders` - Order management
+- `/orders/[id]` - Order details
+- `/orders/new` - Create new order
+- `/login` - Admin authentication
+
+## State Management
+
+The application uses Zustand for state management with the following stores:
+
+- `storeAuth` - Authentication state
+- `storeOrders` - Order management state
+
+## Styling
+
+The project uses Tailwind CSS with a custom admin theme.
